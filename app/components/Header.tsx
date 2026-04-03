@@ -44,6 +44,12 @@ export function Header() {
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
+              href="/add-business"
+              className="rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:brightness-110"
+            >
+              List Your Business
+            </Link>
+            <Link
               href="/login"
               className="rounded-full border border-[color:var(--color-dark-navy)] px-4 py-2 text-sm font-semibold text-[color:var(--color-dark-navy)] shadow-sm transition hover:bg-[color:var(--color-dark-navy)]/10"
             >
@@ -51,7 +57,7 @@ export function Header() {
             </Link>
             <Link
               href="/signup"
-              className="rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2 text-sm font-semibold text-white shadow-md transition hover:brightness-110"
+              className="rounded-full border border-[color:var(--color-alert-orange)] px-4 py-2 text-sm font-semibold text-[color:var(--color-alert-orange)] shadow-sm transition hover:bg-[color:var(--color-alert-orange)] hover:text-white"
             >
               Sign Up
             </Link>
@@ -115,6 +121,13 @@ export function Header() {
             ))}
             <div className="flex items-center gap-3 pt-2">
               <Link
+                href="/add-business"
+                className="flex-1 rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2 text-center text-sm font-semibold text-white shadow-md transition hover:brightness-110"
+                onClick={() => setMenuOpen(false)}
+              >
+                List Your Business
+              </Link>
+              <Link
                 href="/login"
                 className="flex-1 rounded-full border border-[color:var(--color-dark-navy)] px-4 py-2 text-center text-sm font-semibold text-[color:var(--color-dark-navy)] shadow-sm transition hover:bg-[color:var(--color-dark-navy)]/10"
                 onClick={() => setMenuOpen(false)}
@@ -123,7 +136,7 @@ export function Header() {
               </Link>
               <Link
                 href="/signup"
-                className="flex-1 rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2 text-center text-sm font-semibold text-white shadow-md transition hover:brightness-110"
+                className="flex-1 rounded-full border border-[color:var(--color-alert-orange)] px-4 py-2 text-center text-sm font-semibold text-[color:var(--color-alert-orange)] shadow-sm transition hover:bg-[color:var(--color-alert-orange)] hover:text-white"
                 onClick={() => setMenuOpen(false)}
               >
                 Sign Up

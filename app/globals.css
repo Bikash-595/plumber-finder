@@ -11,8 +11,8 @@
   --color-success-green: #16a34a;
   --color-warning-yellow: #f59e0b;
   --color-error-red: #dc2626;
-  --background: var(--color-dark-navy);
-  --foreground: var(--color-white);
+  --background: #ffffff;
+  --foreground: var(--color-dark-navy);
 }
 
 @theme inline {
