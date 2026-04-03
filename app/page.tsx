@@ -463,7 +463,7 @@ export default function Home() {
 
                   <div>
                     <Link
-                      href="/plumbers/book"
+                      href="/plumber/elite-plumbing-services"
                       className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
                     >
                       Book Now
@@ -534,7 +534,7 @@ export default function Home() {
 
                   <div>
                     <Link
-                      href="/plumbers/book"
+                      href="/plumber/elite-plumbing-services"
                       className="inline-flex w-full items-center justify-center rounded-full bg-[color:var(--color-alert-orange)] px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:brightness-110"
                     >
                       Book Now
