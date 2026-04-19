@@ -79,6 +79,7 @@ export default function AboutStory() {
             src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=800&auto=format"
             alt="Plumber working"
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover mix-blend-multiply"
             priority
           />

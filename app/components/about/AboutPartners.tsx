@@ -64,6 +64,7 @@ export default function AboutPartners() {
                     src={partner.logo}
                     alt={partner.name}
                     fill
+                    sizes="(max-width: 768px) 50vw, 20vw"
                     className="object-contain grayscale group-hover:grayscale-0 transition"
                     onError={() =>
                       setErrorImages((prev) => ({

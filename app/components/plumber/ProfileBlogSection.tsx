@@ -28,7 +28,13 @@ export default function ProfileBlogSection({ plumber }: ProfileBlogSectionProps)
         {plumber.blogs.slice(0, 2).map((post) => (
           <Link key={post.slug} href={`/plumber/${plumber.id}/blog/${post.slug}`} className="group overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:-translate-y-1 hover:shadow-md">
             <div className="relative h-44 w-full bg-gray-100">
-              <Image src={post.image} alt={post.title} fill className="object-cover transition duration-300 group-hover:scale-105" />
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover transition duration-300 group-hover:scale-105"
+              />
             </div>
             <div className="p-4">
               <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">

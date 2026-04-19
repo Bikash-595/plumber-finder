@@ -32,7 +32,9 @@ export default function AboutHero() {
           src="/images/plumber-bg.jpg" // ✅ MUST exist in public/images/
           alt="Plumber"
           fill
+          sizes="100vw"
           priority
+          loading="eager"
           className="object-cover scale-105 animate-[zoom_20s_linear_infinite]"
         />
       </div>

@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 
 interface SignupSeekerFormProps {
   onBack?: () => void;
+  onComplete?: (name: string, email: string) => void;
 }
 
 // Common country codes with flags (emoji)
@@ -22,7 +23,7 @@ const countryCodes = [
   { code: "+971", country: "AE", flag: "🇦🇪", example: "50 123 4567" },
 ];
 
-export default function SignupSeekerForm({ onBack }: SignupSeekerFormProps) {
+export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFormProps) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneCountryCode, setPhoneCountryCode] = useState("+1");
@@ -60,6 +61,7 @@ export default function SignupSeekerForm({ onBack }: SignupSeekerFormProps) {
       agreeTerms,
       agreeSms,
     });
+    onComplete?.(fullName, email);
     alert("Account created! You can now find plumbers near you.");
   };
 

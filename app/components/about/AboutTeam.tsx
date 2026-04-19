@@ -185,12 +185,13 @@ export default function AboutTeam() {
           >
             <div className="flex items-center gap-4">
               <div className="relative h-16 w-16 overflow-hidden rounded-full">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                />
+                  <Image
+                    src={member.image}
+                    alt={member.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 16rem"
+                    className="object-cover"
+                  />
               </div>
               <div>
                 <h3 className="text-lg font-bold text-gray-900">{member.name}</h3>

@@ -6,6 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 
 interface SignupCompanyFormProps {
   onBack?: () => void;
+  onComplete?: (name: string, email: string) => void;
 }
 
 // Common country codes with flags (emoji) – reuse from seeker form
@@ -22,7 +23,7 @@ const countryCodes = [
   { code: "+971", country: "AE", flag: "🇦🇪", example: "50 123 4567" },
 ];
 
-export default function SignupCompanyForm({ onBack }: SignupCompanyFormProps) {
+export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyFormProps) {
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneCountryCode, setPhoneCountryCode] = useState("+1");
@@ -62,6 +63,7 @@ export default function SignupCompanyForm({ onBack }: SignupCompanyFormProps) {
       website,
       agreeTerms,
     });
+    onComplete?.(companyName, email);
     alert("Company registration submitted for review. You'll be notified once approved.");
   };
 

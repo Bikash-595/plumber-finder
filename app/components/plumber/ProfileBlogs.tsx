@@ -31,7 +31,13 @@ export default function ProfileBlogs({ plumber }: ProfileBlogsProps) {
             className="group rounded-xl border border-gray-200 overflow-hidden bg-white transition hover:shadow-md hover:-translate-y-1"
           >
             <div className="relative h-40 w-full bg-gray-100">
-              <Image src={post.image} alt={post.title} fill className="object-cover group-hover:scale-105 transition duration-300" />
+              <Image
+                src={post.image}
+                alt={post.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover group-hover:scale-105 transition duration-300"
+              />
             </div>
             <div className="p-4">
               <div className="flex items-center gap-3 text-xs text-gray-500 mb-2">

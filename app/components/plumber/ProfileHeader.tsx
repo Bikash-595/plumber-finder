@@ -135,6 +135,146 @@
 
 
 
+// import Image from "next/image";
+// import { Plumber } from "@/components/find/types";
+// import {
+//   FaStar,
+//   FaCheckCircle,
+//   FaMapMarkerAlt,
+//   FaPhone,
+//   FaEnvelope,
+//   FaGlobe,
+//   FaUsers,
+//   FaUserTie,
+// } from "react-icons/fa";
+
+// export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
+//   return (
+//     <div className="rounded-2xl bg-white p-6 shadow-md border border-gray-200">
+//       <div className="flex flex-col sm:flex-row gap-6">
+        
+//         {/* Logo */}
+//         <div className="relative h-32 w-32 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 border">
+//           <Image
+//             src={plumber.logo}
+//             alt={plumber.companyName}
+//             fill
+//             sizes="128px"
+//             className="object-cover"
+//           />
+//         </div>
+
+//         {/* Content */}
+//         <div className="flex-1">
+          
+//           {/* Top Section */}
+//           <div className="flex flex-wrap items-start justify-between gap-3">
+            
+//             {/* Name + Rating */}
+//             <div>
+//               <div className="flex items-center gap-2 flex-wrap">
+//                 <h1 className="text-2xl font-bold text-black">
+//                   {plumber.companyName}
+//                 </h1>
+
+//                 {plumber.isVerified && (
+//                   <FaCheckCircle className="h-5 w-5 text-yellow-500" />
+//                 )}
+//               </div>
+
+//               {/* Rating + Location */}
+//               <div className="flex items-center gap-3 mt-2 flex-wrap text-black">
+//                 <div className="flex items-center gap-1">
+//                   <FaStar className="text-yellow-500" />
+//                   <span className="font-semibold">
+//                     {plumber.rating}
+//                   </span>
+//                   <span className="text-sm">
+//                     ({plumber.reviewCount} reviews)
+//                   </span>
+//                 </div>
+
+//                 <span>•</span>
+
+//                 <div className="flex items-center gap-1">
+//                   <FaMapMarkerAlt className="h-4 w-4" />
+//                   <span>{plumber.location}</span>
+//                 </div>
+//               </div>
+//             </div>
+
+//             {/* Emergency Badge */}
+//             {plumber.isEmergency && (
+//               <span className="rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-600">
+//                 🚨 24/7 Emergency
+//               </span>
+//             )}
+//           </div>
+
+//           {/* Description */}
+//           <p className="mt-4 text-black leading-relaxed">
+//             {plumber.description}
+//           </p>
+
+//           {/* Info Section */}
+//           <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-black">
+            
+//             <div className="flex items-center gap-2">
+//               <FaUserTie />
+//               <span>Owner: {plumber.ownerName}</span>
+//             </div>
+
+//             <div className="flex items-center gap-2">
+//               <FaUsers />
+//               <span>{plumber.teamSize} licensed plumbers</span>
+//             </div>
+//           </div>
+
+//           {/* Actions */}
+//           <div className="mt-6 flex flex-wrap gap-3">
+            
+//             <a
+//               href={`tel:${plumber.phone}`}
+//               className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+//             >
+//               <FaPhone />
+//               Call
+//             </a>
+
+//             <a
+//               href={`mailto:${plumber.email}`}
+//               className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+//             >
+//               <FaEnvelope />
+//               Email
+//             </a>
+
+//             {plumber.website && (
+//               <a
+//                 href={plumber.website}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+//               >
+//                 <FaGlobe />
+//                 Website
+//               </a>
+//             )}
+//           </div>
+
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+
+
 import Image from "next/image";
 import { Plumber } from "@/components/find/types";
 import {
@@ -159,6 +299,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             src={plumber.logo}
             alt={plumber.companyName}
             fill
+            sizes="128px"
             className="object-cover"
           />
         </div>
@@ -172,32 +313,32 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             {/* Name + Rating */}
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-2xl font-bold text-black">
+                <h1 className="text-2xl font-bold text-gray-800">
                   {plumber.companyName}
                 </h1>
 
                 {plumber.isVerified && (
-                  <FaCheckCircle className="h-5 w-5 text-yellow-500" />
+                  <FaCheckCircle className="h-5 w-5 text-[#FFD60A]" />
                 )}
               </div>
 
               {/* Rating + Location */}
-              <div className="flex items-center gap-3 mt-2 flex-wrap text-black">
+              <div className="flex items-center gap-3 mt-2 flex-wrap text-gray-600">
                 <div className="flex items-center gap-1">
-                  <FaStar className="text-yellow-500" />
-                  <span className="font-semibold">
+                  <FaStar className="text-[#FFD60A]" />
+                  <span className="font-semibold text-gray-800">
                     {plumber.rating}
                   </span>
-                  <span className="text-sm">
+                  <span className="text-sm text-gray-500">
                     ({plumber.reviewCount} reviews)
                   </span>
                 </div>
 
-                <span>•</span>
+                <span className="text-gray-300">•</span>
 
                 <div className="flex items-center gap-1">
-                  <FaMapMarkerAlt className="h-4 w-4" />
-                  <span>{plumber.location}</span>
+                  <FaMapMarkerAlt className="h-4 w-4 text-gray-500" />
+                  <span className="text-gray-600">{plumber.location}</span>
                 </div>
               </div>
             </div>
@@ -211,21 +352,21 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
           </div>
 
           {/* Description */}
-          <p className="mt-4 text-black leading-relaxed">
+          <p className="mt-4 text-gray-600 leading-relaxed">
             {plumber.description}
           </p>
 
           {/* Info Section */}
-          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-black">
+          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-gray-600">
             
             <div className="flex items-center gap-2">
-              <FaUserTie />
-              <span>Owner: {plumber.ownerName}</span>
+              <FaUserTie className="text-gray-500" />
+              <span>Owner: <span className="text-gray-800 font-medium">{plumber.ownerName}</span></span>
             </div>
 
             <div className="flex items-center gap-2">
-              <FaUsers />
-              <span>{plumber.teamSize} licensed plumbers</span>
+              <FaUsers className="text-gray-500" />
+              <span><span className="text-gray-800 font-medium">{plumber.teamSize}</span> licensed plumbers</span>
             </div>
           </div>
 
@@ -234,17 +375,17 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             
             <a
               href={`tel:${plumber.phone}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
             >
-              <FaPhone />
+              <FaPhone className="text-gray-500" />
               Call
             </a>
 
             <a
               href={`mailto:${plumber.email}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
             >
-              <FaEnvelope />
+              <FaEnvelope className="text-gray-500" />
               Email
             </a>
 
@@ -253,9 +394,9 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                 href={plumber.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border text-black hover:bg-gray-100 transition"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
               >
-                <FaGlobe />
+                <FaGlobe className="text-gray-500" />
                 Website
               </a>
             )}
@@ -266,9 +407,3 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
     </div>
   );
 }
-
-
-
-
-
-

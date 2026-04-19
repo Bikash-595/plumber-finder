@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 import SearchHero from "@/components/find/SearchHero";
 import FilterSidebar from "@/components/find/FilterSidebar";
 import ResultsHeader from "@/components/find/ResultsHeader";
@@ -10,9 +11,10 @@ import Pagination from "@/components/find/Pagination";
 import { plumbers } from "@/data/plumbers";
 
 export default function FindPlumberPage() {
+  const searchParams = useSearchParams();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchFilters, setSearchFilters] = useState({
-    query: "",
+    query: searchParams.get("search") ?? "",
     zip: "",
     serviceCategory: "",
     emergencyOnly: false,
@@ -235,7 +237,13 @@ export default function FindPlumberPage() {
 
   return (
     <main className="min-h-screen bg-white font-sans">
-      <SearchHero onSearch={setSearchFilters} />
+      <SearchHero
+        onSearch={setSearchFilters}
+        initialFilters={{
+          query: searchParams.get("search") ?? "",
+          zip: searchParams.get("location") ?? "",
+        }}
+      />
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8">
           <aside className="lg:w-80 flex-shrink-0">

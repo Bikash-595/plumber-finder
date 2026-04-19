@@ -404,6 +404,7 @@ export default function PlumberCardGrid({ plumbers }: Props) {
                   src={displayImage}
                   alt={plumber.companyName || "Company"}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition group-hover:scale-105 duration-300"
                 />
               ) : (

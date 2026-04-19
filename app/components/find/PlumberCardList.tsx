@@ -261,6 +261,7 @@ export default function PlumberCardList({ plumbers }: Props) {
                 src={plumber.logo}
                 alt={plumber.companyName}
                 fill
+                sizes="96px"
                 className="object-cover"
               />
             </div>
@@ -350,6 +351,7 @@ export default function PlumberCardList({ plumbers }: Props) {
                   src={plumber.media.images[0]}
                   alt="Preview"
                   fill
+                  sizes="96px"
                   className="object-cover"
                 />
               </div>

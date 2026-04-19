@@ -201,7 +201,6 @@ export default function MediaGallery({ images, videos }: MediaGalleryProps) {
                   sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                   loading="lazy"
-                  quality={60} // reduce CPU load
                 />
               </button>
             ))}

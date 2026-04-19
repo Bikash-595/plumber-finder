@@ -405,13 +405,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import SignupChooseType from "../components/signup/SignupChooseType";
 import SignupSeekerForm from "../components/signup/SignupSeekerForm";
 import SignupCompanyForm from "../components/signup/SignupCompanyForm";
+import { storeUser } from "../components/utils/auth";
 
 export default function SignupPage() {
   const [step, setStep] = useState<"choose" | "form">("choose");
   const [accountType, setAccountType] = useState<"seeker" | "company" | null>(null);
+  const router = useRouter();
 
   const handleSelectType = (type: "seeker" | "company") => {
     setAccountType(type);
@@ -426,6 +429,16 @@ export default function SignupPage() {
   const handleBack = () => {
     setStep("choose");
     setAccountType(null);
+  };
+
+  const handleSignupComplete = (name: string, email: string) => {
+    storeUser({
+      name,
+      email,
+      avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
+      accountType: accountType ?? "seeker",
+    });
+    router.push("/");
   };
 
   return (
@@ -447,9 +460,9 @@ export default function SignupPage() {
                 onContinue={handleContinue}
               />
             ) : accountType === "seeker" ? (
-              <SignupSeekerForm onBack={handleBack} />
+              <SignupSeekerForm onBack={handleBack} onComplete={handleSignupComplete} />
             ) : (
-              <SignupCompanyForm onBack={handleBack} />
+              <SignupCompanyForm onBack={handleBack} onComplete={handleSignupComplete} />
             )}
           </div>
         </div>
