@@ -94,7 +94,7 @@ export default function SavedPage() {
         {saved.length === 0 ? (
           <div className="rounded-xl bg-white p-12 text-center shadow-sm">
             <FaHeart className="mx-auto h-12 w-12 text-gray-300" />
-            <p className="mt-3 text-gray-500">You haven't saved any plumbers yet.</p>
+            <p className="mt-3 text-gray-500">You haven&apos;t saved any plumbers yet.</p>
             <Link
               href="/find"
               className="mt-4 inline-block rounded-full bg-[#FFD60A] px-6 py-2 text-sm font-semibold text-white transition hover:brightness-105"

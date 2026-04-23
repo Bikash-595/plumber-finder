@@ -103,20 +103,12 @@
 
 "use client";
 
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
 import { useState } from "react";
 import { plumbers } from "@/data/plumbers";
-import SearchHero from "@/components/find/SearchHero";
 import PlumberCardGrid from "@/components/find/PlumberCardGrid";
 import PlumberCardList from "@/components/find/PlumberCardList";
 import ResultsHeader from "@/components/find/ResultsHeader";
 import Pagination from "@/components/find/Pagination";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-plus-jakarta",
-});
 
 export default function Home() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");

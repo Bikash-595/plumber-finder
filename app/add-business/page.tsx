@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { FaCheckCircle, FaDollarSign, FaUsers, FaChartLine, FaShieldAlt, FaClock, FaEnvelope, FaPhone, FaMapMarkerAlt, FaBuilding } from "react-icons/fa";
+import { FaDollarSign, FaUsers, FaChartLine, FaShieldAlt, FaClock } from "react-icons/fa";
 
 export default function AddBusinessPage() {
   const [formData, setFormData] = useState({
@@ -99,7 +99,7 @@ export default function AddBusinessPage() {
           <h2 className="mb-6 text-2xl font-bold text-gray-900">Apply Now</h2>
           {submitted && (
             <div className="mb-4 rounded-lg bg-green-50 p-3 text-sm text-green-700">
-              ✓ Application submitted! We'll review and contact you within 48 hours.
+              ✓ Application submitted! We&apos;ll review and contact you within 48 hours.
             </div>
           )}
           <form onSubmit={handleSubmit} className="space-y-5">
