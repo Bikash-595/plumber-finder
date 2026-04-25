@@ -1,16 +1,23 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { plumbers } from "@/data/plumbers";
 import SearchHero from "@/components/find/SearchHero";
 import FilterSidebar from "@/components/find/FilterSidebar";
 import ResultsHeader from "@/components/find/ResultsHeader";
 import PlumberCardGrid from "@/components/find/PlumberCardGrid";
 import PlumberCardList from "@/components/find/PlumberCardList";
 import Pagination from "@/components/find/Pagination";
-import { plumbers } from "@/data/plumbers";
+export default function FindPlumberPageWrapper() {
+  return (
+    <Suspense>
+      <FindPlumberPage />
+    </Suspense>
+  );
+}
 
-export default function FindPlumberPage() {
+function FindPlumberPage() {
   const searchParams = useSearchParams();
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [searchFilters, setSearchFilters] = useState({
@@ -37,7 +44,6 @@ export default function FindPlumberPage() {
   // Helper functions for ranges (team size, years)
   const matchesTeamSize = useCallback((size: number, ranges: string[]) => {
     if (ranges.length === 0) return true;
-
     return ranges.some((range) => {
       if (range === "1-5") return size >= 1 && size <= 5;
       if (range === "6-10") return size >= 6 && size <= 10;
@@ -157,38 +163,27 @@ export default function FindPlumberPage() {
       );
 
     const matchesPrice =
-      priceRange === "all" ||
-      (priceRange === "low" && plumber.priceRange.includes("$") && !plumber.priceRange.includes("$$")) ||
-      (priceRange === "high" &&
-        (plumber.priceRange.includes("$$") ||
-          plumber.averageCost >= 500 ||
-          /\b(1[2-9]\d|[2-9]\d{2,})\b/.test(plumber.priceRange)));
+      priceRange === "all" || plumber.priceRange === priceRange;
 
     const matchesEmergencySidebar = !emergencyOnly || plumber.isEmergency;
     const matchesVerifiedSidebar = !verifiedOnly || plumber.isVerified;
-
     const matchesResponseTime =
-      selectedResponseTimes.length === 0 || selectedResponseTimes.includes(normalizedResponseTime);
-
+      selectedResponseTimes.length === 0 ||
+      selectedResponseTimes.includes(normalizedResponseTime);
     const matchesTeamSizeFilter = matchesTeamSize(plumber.teamSize, selectedTeamSizes);
     const matchesYearsFilter = matchesYearsRange(plumber.yearsInBusiness, selectedYearsInBusiness);
-
     const matchesPaymentMethods =
       selectedPaymentMethods.length === 0 ||
-      selectedPaymentMethods.some((method) =>
-        plumberPaymentMethods.includes(method.toLowerCase())
-      );
-
+      selectedPaymentMethods.some((method) => plumberPaymentMethods.includes(method));
     const matchesLanguages =
       selectedLanguages.length === 0 ||
-      selectedLanguages.some((language) => plumberLanguages.includes(language.toLowerCase()));
-
+      selectedLanguages.some((lang) => plumberLanguages.includes(lang));
     const matchesCertifications =
       selectedCertifications.length === 0 ||
-      selectedCertifications.some((cert) => plumberCertifications.includes(cert.toLowerCase()));
-
+      selectedCertifications.some((cert) => plumberCertifications.includes(cert));
     const matchesAvailability =
-      selectedAvailability.length === 0 || selectedAvailability.includes(normalizedAvailability);
+      selectedAvailability.length === 0 ||
+      selectedAvailability.includes(normalizedAvailability);
 
     return (
       matchesQuery &&
@@ -281,7 +276,11 @@ export default function FindPlumberPage() {
             ) : (
               <PlumberCardList plumbers={paginatedPlumbers} />
             )}
-            {totalPages > 1 && <Pagination currentPage={safeCurrentPage} totalPages={totalPages} onPageChange={setCurrentPage} />}
+            <Pagination
+              currentPage={safeCurrentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </div>
       </div>

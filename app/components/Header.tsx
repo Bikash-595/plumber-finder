@@ -878,7 +878,7 @@ export function Header() {
               onQueryChange={setSearchQuery}
               location={searchLocation}
               onLocationChange={setSearchLocation}
-              onSearch={handlePanelSearch}  // ✅ use wrapper
+              onSearch={handlePanelSearch}
             />
           </div>
 

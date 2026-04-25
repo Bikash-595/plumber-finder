@@ -17,7 +17,7 @@ export default function ProfileBlogs({ plumber }: ProfileBlogsProps) {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-xl font-bold text-gray-900">Latest from Our Blog</h2>
         <Link
-          href={`/plumber/${plumber.id}/blogs`}
+          href="/blogs"
           className="text-sm text-[#FFD60A] hover:underline"
         >
           View all →
