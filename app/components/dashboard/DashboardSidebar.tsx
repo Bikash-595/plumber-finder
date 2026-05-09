@@ -1,112 +1,15 @@
-// "use client";
-
-// import Link from "next/link";
-// import { usePathname, useRouter } from "next/navigation";
-// import {
-//   FaChartLine,
-//   FaHeart,
-//   FaBell,
-//   FaUserCog,
-//   FaSignOutAlt,
-//   FaBuilding,
-//   FaTachometerAlt,
-//   FaQuestionCircle,
-//   FaShieldAlt,
-// } from "react-icons/fa";
-// import { clearStoredUser, getInitials, readStoredUser, type AppUser } from "../utils/auth";
-// import { useEffect, useState } from "react";
-
-// const navItems = [
-//   { label: "Dashboard", href: "/dashboard", icon: FaTachometerAlt },
-//   { label: "Compare Companies", href: "/dashboard/compare", icon: FaBuilding },
-//   { label: "Saved Deals", href: "/saved", icon: FaHeart },
-//   { label: "Notifications", href: "/notifications", icon: FaBell },
-//   { label: "Profile Settings", href: "/dashboard/profile", icon: FaUserCog },
-//   { label: "Help & Support", href: "/dashboard/support", icon: FaQuestionCircle },
-//   { label: "Privacy & Security", href: "/dashboard/security", icon: FaShieldAlt },
-// ];
-
-// export default function DashboardSidebar() {
-//   const pathname = usePathname();
-//   const router = useRouter();
-//   const [user, setUser] = useState<AppUser | null>(null);
-
-//   useEffect(() => {
-//     setUser(readStoredUser());
-//   }, []);
-
-//   const handleLogout = () => {
-//     clearStoredUser();
-//     router.push("/");
-//   };
-
-//   return (
-//     <aside className="sticky top-28 hidden h-[calc(100vh-7rem)] w-64 flex-shrink-0 overflow-y-auto rounded-2xl border border-gray-200 bg-white p-4 shadow-sm lg:block">
-//       {/* User Profile Summary */}
-//       <div className="mb-6 flex items-center gap-3 border-b border-gray-100 pb-4">
-//         {user?.avatarUrl ? (
-//           <img src={user.avatarUrl} alt={user.name} className="h-10 w-10 rounded-full object-cover" />
-//         ) : (
-//           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#FFD60A] text-sm font-bold text-white">
-//             {getInitials(user?.name || "User")}
-//           </div>
-//         )}
-//         <div className="overflow-hidden">
-//           <p className="truncate font-semibold text-gray-900">{user?.name || "Guest"}</p>
-//           <p className="truncate text-xs text-gray-500">{user?.email || ""}</p>
-//         </div>
-//       </div>
-
-//       {/* Navigation */}
-//       <nav className="space-y-1">
-//         {navItems.map((item) => {
-//           const Icon = item.icon;
-//           const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
-//           return (
-//             <Link
-//               key={item.href}
-//               href={item.href}
-//               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${
-//                 isActive
-//                   ? "bg-[#FFD60A] text-gray-900"
-//                   : "text-gray-700 hover:bg-gray-100"
-//               }`}
-//             >
-//               <Icon className="h-4 w-4" />
-//               {item.label}
-//             </Link>
-//           );
-//         })}
-//         <button
-//           onClick={handleLogout}
-//           className="mt-4 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
-//         >
-//           <FaSignOutAlt className="h-4 w-4" />
-//           Logout
-//         </button>
-//       </nav>
-//     </aside>
-//   );
-// }
-
-
-
-
-
-
-
 
 
 "use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { type MouseEvent, useState } from "react";
 import {
   FaHeart,
   FaBell,
   FaSignOutAlt,
   FaBuilding,
-  FaTachometerAlt,
   FaQuestionCircle,
   FaShieldAlt,
   FaChevronRight,
@@ -118,10 +21,13 @@ import {
   FaChartBar,
   FaHome,
   FaSearch,
-  FaStar,
+  FaTools,
+  FaCheckCircle,
 } from "react-icons/fa";
-import { clearStoredUser, getInitials, readStoredUser, type AppUser } from "../utils/auth";
-import { useEffect, useState } from "react";
+import { TbSquareToggle } from "react-icons/tb";
+import { clearStoredUser } from "../utils/auth";
+
+export type DashboardSidebarState = "open" | "icons" | "closed";
 
 const navSections = [
   {
@@ -160,17 +66,40 @@ const navSections = [
 ];
 
 interface DashboardSidebarProps {
+  sidebarState?: DashboardSidebarState;
   onLinkClick?: () => void;
+  onToggle?: () => void;
 }
 
-export default function DashboardSidebar({ onLinkClick }: DashboardSidebarProps) {
+function isRouteActive(pathname: string, href: string) {
+  if (href === "/dashboard") return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
+  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+}
+
+export default function DashboardSidebar({
+  sidebarState = "open",
+  onLinkClick,
+  onToggle,
+}: DashboardSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<AppUser | null>(null);
+  const [openSections, setOpenSections] = useState<string[]>([]);
+  const activeSection =
+    navSections.find((section) =>
+      section.items.some((item) => isRouteActive(pathname, item.href))
+    )?.label || navSections[0].label;
 
-  useEffect(() => {
-    setUser(readStoredUser());
-  }, []);
+  const toggleSection = (sectionLabel: string) => {
+    setOpenSections((current) =>
+      current.includes(sectionLabel)
+        ? current.filter((label) => label !== sectionLabel)
+        : [...current, sectionLabel]
+    );
+  };
 
   const handleLogout = () => {
     clearStoredUser();
@@ -178,277 +107,222 @@ export default function DashboardSidebar({ onLinkClick }: DashboardSidebarProps)
     onLinkClick?.();
   };
 
+  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (isModifiedClick(event)) {
+      return;
+    }
+
+    event.preventDefault();
+    router.push(href);
+    onLinkClick?.();
+  };
+
+  if (sidebarState === "closed") {
+    return (
+      <aside className="contents">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="fixed left-4 top-28 z-50 flex h-11 w-11 items-center justify-center rounded-lg bg-transparent text-black transition hover:text-[#0b1f3b]"
+          aria-label="Open sidebar"
+        >
+          <TbSquareToggle className="h-6 w-6" />
+        </button>
+      </aside>
+    );
+  }
+
+  if (sidebarState === "icons") {
+    const iconItems = navSections.flatMap((section) => section.items);
+
+    return (
+      <aside className="flex h-full w-14 flex-shrink-0 flex-col items-center overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] py-4 text-white shadow-xl">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-[#FFD60A] text-[#0b1f3b] transition hover:bg-white"
+          aria-label="Open sidebar"
+        >
+          <TbSquareToggle className="h-5 w-5" />
+        </button>
+
+        <nav className="flex min-h-0 flex-1 flex-col items-center gap-2 overflow-y-auto px-2">
+          {iconItems.map((item) => {
+            const Icon = item.icon;
+            const isActive = isRouteActive(pathname, item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={(event) => handleNavClick(event, item.href)}
+                className={`flex h-10 w-10 items-center justify-center rounded-lg transition ${
+                  isActive
+                    ? "bg-[#FFD60A] text-[#0b1f3b]"
+                    : "bg-white/[0.06] text-white/70 hover:bg-white/[0.12] hover:text-white"
+                }`}
+                aria-label={item.label}
+                title={item.label}
+              >
+                <Icon className="h-4 w-4" />
+              </Link>
+            );
+          })}
+        </nav>
+
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="mt-4 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10 text-red-200 transition hover:bg-red-500/20 hover:text-white"
+          aria-label="Logout"
+          title="Logout"
+        >
+          <FaSignOutAlt className="h-4 w-4" />
+        </button>
+      </aside>
+    );
+  }
+
   return (
-    <aside className="h-full w-64 flex-shrink-0 overflow-y-auto bg-white border-r border-gray-200 shadow-sm">
-      {/* Brand Header */}
-      <div className="border-b border-gray-200 bg-gradient-to-r from-[#FFD60A]/5 to-[#FFD60A]/10 px-6 py-5">
+    <aside className="flex h-full w-64 flex-shrink-0 flex-col overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] text-white shadow-xl">
+      <div className="border-b border-white/10 px-5 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFD60A] to-[#B1A606] text-white shadow-lg">
-            <span className="text-xl font-bold">🔧</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-lg font-bold text-gray-900">Plumber Pro</span>
-            <span className="text-sm text-gray-600">Professional Dashboard</span>
-          </div>
+          <Link
+            href="/dashboard"
+            onClick={(event) => handleNavClick(event, "/dashboard")}
+            className="flex min-w-0 flex-1 items-center gap-3"
+          >
+            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#FFD60A] text-[#0b1f3b] shadow-sm">
+              <FaTools className="h-5 w-5" />
+            </span>
+            <span className="min-w-0">
+              <span className="block truncate text-base font-bold tracking-wide !text-white">
+                Plumber Finder
+              </span>
+              <span className="block truncate text-xs font-medium !text-white/60">
+                Customer Dashboard
+              </span>
+            </span>
+          </Link>
+          {onToggle && (
+            <button
+              type="button"
+              onClick={onToggle}
+              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-white transition hover:border-[#FFD60A] hover:bg-[#FFD60A] hover:text-[#0b1f3b]"
+              aria-label="Close sidebar"
+            >
+              <TbSquareToggle className="h-5 w-5" />
+            </button>
+          )}
         </div>
       </div>
 
-      {/* User Profile Card */}
-      <div className="border-b border-gray-200 bg-gray-50/50 px-6 py-4">
-        <div className="flex items-center gap-4 rounded-xl bg-white p-4 shadow-sm border border-gray-100">
-          {user?.avatarUrl ? (
-            <img
-              src={user.avatarUrl}
-              alt={user.name}
-              className="h-14 w-14 rounded-full object-cover ring-2 ring-[#FFD60A]/20 shadow-md"
-            />
-          ) : (
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#FFD60A] to-[#B1A606] text-lg font-bold text-white shadow-md">
-              {getInitials(user?.name || "User")}
-            </div>
-          )}
-          <div className="min-w-0 flex-1">
-            <p className="truncate text-base font-semibold text-gray-900">{user?.name || "Guest"}</p>
-            <p className="truncate text-sm text-gray-600">{user?.email || "No email"}</p>
-            <div className="mt-1 flex items-center gap-1">
-              <FaStar className="h-3 w-3 text-[#FFD60A]" />
-              <span className="text-xs font-medium text-gray-700">Pro Member</span>
-            </div>
+      <div className="mx-4 mt-4 rounded-lg border border-white/10 bg-white/[0.06] p-4 shadow-sm">
+        <div className="flex items-start gap-3">
+          <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-md bg-emerald-400/15 text-emerald-300">
+            <FaCheckCircle className="h-4 w-4" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm font-semibold !text-white">Ready to book</p>
+            <p className="mt-1 text-xs leading-5 !text-white/60">
+              Compare verified plumbers, saved deals, invoices, and support in one place.
+            </p>
           </div>
         </div>
       </div>
 
       {/* Navigation */}
-      <nav className="px-4 py-6">
-        <div className="space-y-6">
-          {navSections.map((section) => (
-            <div key={section.label}>
-              <p className="mb-3 px-3 text-xs font-bold uppercase tracking-wider text-gray-500">
-                {section.label}
-              </p>
-              <div className="space-y-1">
-                {section.items.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => onLinkClick?.()}
-                      className={`group flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-                        isActive
-                          ? "bg-gradient-to-r from-[#FFD60A] to-[#B1A606] text-white shadow-lg transform scale-[1.02]"
-                          : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 hover:shadow-md"
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <Icon className={`h-5 w-5 ${isActive ? "text-white" : "text-gray-500"}`} />
-                        <span className="font-medium">{item.label}</span>
-                      </div>
-                      {isActive && <FaChevronRight className="h-4 w-4 text-white transition-transform group-hover:translate-x-1" />}
-                    </Link>
-                  );
-                })}
+      <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-5">
+        <div className="space-y-2">
+          {navSections.map((section) => {
+            const isOpen = section.label === activeSection || openSections.includes(section.label);
+
+            return (
+              <div key={section.label}>
+                <button
+                  type="button"
+                  onClick={() => toggleSection(section.label)}
+                  className={`mb-1 flex min-h-9 w-full items-center justify-between rounded-lg px-3 text-left text-[11px] font-bold uppercase tracking-wider transition ${
+                    isOpen
+                      ? "bg-white/10 !text-white"
+                      : "!text-white/45 hover:bg-white/[0.06] hover:!text-white/75"
+                  }`}
+                >
+                  <span>{section.label}</span>
+                  <FaChevronRight
+                    className={`h-3 w-3 transition-transform ${
+                      isOpen ? "rotate-90 !text-[#FFD60A]" : "!text-white/40"
+                    }`}
+                  />
+                </button>
+
+                {isOpen && (
+                  <div className="space-y-1 pb-2">
+                    {section.items.map((item) => {
+                      const Icon = item.icon;
+                      const isActive = isRouteActive(pathname, item.href);
+                      return (
+                        <Link
+                          key={item.href}
+                          href={item.href}
+                          onClick={(event) => handleNavClick(event, item.href)}
+                          className={`group relative flex min-h-11 items-center justify-between rounded-lg px-3 py-2.5 pl-4 text-sm font-semibold transition-all duration-200 ${
+                            isActive
+                              ? "bg-[#FFD60A] !text-[#0b1f3b] shadow-md shadow-black/10"
+                              : "!text-white/75 hover:bg-white/[0.08] hover:!text-white"
+                          }`}
+                        >
+                          {isActive && (
+                            <span className="absolute left-1 top-2 bottom-2 w-1 rounded-full bg-[#0b1f3b]" />
+                          )}
+                          <div className="flex min-w-0 items-center gap-3">
+                            <span
+                              className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md transition ${
+                                isActive ? "bg-[#0b1f3b]/10" : "bg-white/5 group-hover:bg-white/[0.08]"
+                              }`}
+                            >
+                              <Icon
+                                className={`h-4 w-4 ${
+                                  isActive ? "!text-[#0b1f3b]" : "!text-white/70 group-hover:!text-white"
+                                }`}
+                              />
+                            </span>
+                            <span
+                              className={`truncate ${
+                                isActive ? "!text-[#0b1f3b]" : "!text-white/80 group-hover:!text-white"
+                              }`}
+                            >
+                              {item.label}
+                            </span>
+                          </div>
+                          {isActive && (
+                            <FaChevronRight className="h-3.5 w-3.5 flex-shrink-0 !text-[#0b1f3b]" />
+                          )}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </nav>
 
       {/* Logout Button */}
-      <div className="border-t border-gray-200 bg-gray-50/50 px-4 py-4">
+      <div className="border-t border-white/10 bg-black/10 p-3">
         <button
           onClick={handleLogout}
-          className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:text-red-700 hover:shadow-md"
+          className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold !text-red-200 transition-all duration-200 hover:bg-red-500/15 hover:!text-white"
         >
-          <div className="flex items-center gap-4">
-            <FaSignOutAlt className="h-5 w-5" />
-            <span className="font-medium">Logout</span>
+          <div className="flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500/10">
+              <FaSignOutAlt className="h-4 w-4" />
+            </span>
+            <span>Logout</span>
           </div>
         </button>
       </div>
     </aside>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// "use client";
-
-// import Link from "next/link";
-// import { usePathname, useRouter } from "next/navigation";
-// import {
-//   FaHeart,
-//   FaBell,
-//   FaUserCog,
-//   FaSignOutAlt,
-//   FaBuilding,
-//   FaTachometerAlt,
-//   FaQuestionCircle,
-//   FaShieldAlt,
-//   FaChevronRight,
-//   FaFileInvoice,
-//   FaHistory,
-//   FaUser,
-//   FaWallet,
-//   FaCog,
-//   FaChartBar,
-//   FaHome,
-// } from "react-icons/fa";
-// import { clearStoredUser, getInitials, readStoredUser, type AppUser } from "../utils/auth";
-// import { useEffect, useState } from "react";
-
-// const navSections = [
-//   {
-//     label: "Main",
-//     items: [
-//       { label: "Dashboard", href: "/dashboard", icon: FaTachometerAlt },
-//       { label: "Overview", href: "/dashboard/overview", icon: FaChartBar },
-//     ],
-//   },
-//   {
-//     label: "Search & Bookings",
-//     items: [
-//       { label: "Find Plumbers", href: "/find", icon: FaBuilding },
-//       { label: "Compare Companies", href: "/dashboard/compare", icon: FaBuilding },
-//       { label: "Saved Deals", href: "/saved", icon: FaHeart },
-//       { label: "Booking History", href: "/dashboard/bookings", icon: FaHistory },
-//     ],
-//   },
-//   {
-//     label: "Account",
-//     items: [
-//       { label: "Profile", href: "/dashboard/profile", icon: FaUser },
-//       { label: "Settings", href: "/dashboard/settings", icon: FaCog },
-//       { label: "Wallet & Payments", href: "/dashboard/wallet", icon: FaWallet },
-//       { label: "Invoices", href: "/dashboard/invoices", icon: FaFileInvoice },
-//     ],
-//   },
-//   {
-//     label: "Support & Security",
-//     items: [
-//       { label: "Notifications", href: "/dashboard/notifications", icon: FaBell },
-//       { label: "Help & Support", href: "/dashboard/support", icon: FaQuestionCircle },
-//       { label: "Security", href: "/dashboard/security", icon: FaShieldAlt },
-//     ],
-//   },
-// ];
-
-// interface DashboardSidebarProps {
-//   onLinkClick?: () => void;
-// }
-
-// export default function DashboardSidebar({ onLinkClick }: DashboardSidebarProps) {
-//   const pathname = usePathname();
-//   const router = useRouter();
-//   const [user, setUser] = useState<AppUser | null>(null);
-
-//   useEffect(() => {
-//     setUser(readStoredUser());
-//   }, []);
-
-//   const handleLogout = () => {
-//     clearStoredUser();
-//     router.push("/");
-//     onLinkClick?.();
-//   };
-
-//   return (
-//     <aside className="sticky top-28 h-[calc(100vh-7rem)] w-64 flex-shrink-0 overflow-y-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
-//       {/* Header with logo */}
-//       <div className="border-b border-gray-100 px-5 py-4">
-//         <div className="flex items-center gap-2">
-//           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#FFD60A] to-[#B1A606] text-white shadow-sm">
-//             <FaHome className="h-4 w-4" />
-//           </div>
-//           <div>
-//             <p className="text-sm font-bold text-gray-800">Plumber Finder</p>
-//             <p className="text-[11px] text-gray-500">Professional Dashboard</p>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* User profile card */}
-//       <div className="border-b border-gray-100 px-5 py-4">
-//         <div className="flex items-center gap-3 rounded-xl bg-gray-50/80 p-3 transition hover:bg-gray-100">
-//           {user?.avatarUrl ? (
-//             <img src={user.avatarUrl} alt={user.name} className="h-10 w-10 rounded-full object-cover ring-2 ring-white shadow-sm" />
-//           ) : (
-//             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#FFD60A] to-[#B1A606] text-sm font-bold text-white shadow-sm">
-//               {getInitials(user?.name || "User")}
-//             </div>
-//           )}
-//           <div className="min-w-0 flex-1">
-//             <p className="truncate text-sm font-semibold text-gray-800">{user?.name || "Guest"}</p>
-//             <p className="truncate text-xs text-gray-500">{user?.email || "No email"}</p>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Navigation */}
-//       <nav className="px-3 py-4">
-//         <div className="space-y-5">
-//           {navSections.map((section) => (
-//             <div key={section.label}>
-//               <p className="mb-1 px-3 text-[11px] font-semibold uppercase tracking-wider text-gray-500">
-//                 {section.label}
-//               </p>
-//               <div className="space-y-1">
-//                 {section.items.map((item) => {
-//                   const Icon = item.icon;
-//                   const isActive = pathname === item.href || pathname?.startsWith(item.href + "/");
-//                   return (
-//                     <Link
-//                       key={item.href}
-//                       href={item.href}
-//                       onClick={() => onLinkClick?.()}
-//                       className={`group flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
-//                         isActive
-//                           ? "bg-[#FFD60A]/10 text-[#FFD60A] shadow-sm"
-//                           : "text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-//                       }`}
-//                     >
-//                       <div className="flex items-center gap-3">
-//                         <Icon className={`h-4 w-4 ${isActive ? "text-[#FFD60A]" : ""}`} />
-//                         <span>{item.label}</span>
-//                       </div>
-//                       {isActive && <FaChevronRight className="h-3 w-3 text-[#FFD60A]" />}
-//                     </Link>
-//                   );
-//                 })}
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </nav>
-
-//       {/* Logout button */}
-//       <div className="border-t border-gray-100 px-3 py-4">
-//         <button
-//           onClick={handleLogout}
-//           className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition-all duration-200 hover:bg-red-50 hover:text-red-700"
-//         >
-//           <div className="flex items-center gap-3">
-//             <FaSignOutAlt className="h-4 w-4" />
-//             <span>Logout</span>
-//           </div>
-//         </button>
-//       </div>
-//     </aside>
-//   );
-// }
