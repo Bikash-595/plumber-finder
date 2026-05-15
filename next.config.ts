@@ -2,6 +2,11 @@ import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  experimental: {
+    cpus: 2,
+    staticGenerationMaxConcurrency: 2,
+    staticGenerationMinPagesPerWorker: 1,
+  },
   images: {
     qualities: [60, 75],
     remotePatterns: [
