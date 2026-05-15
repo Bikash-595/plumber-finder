@@ -96,14 +96,14 @@
 "use client";
 
 import { useState } from "react";
-import { faqData, tabs } from "../data/faqData";
-import FaqHero from "../components/faq/FaqHero";
-import FaqSearch from "../components/faq/FaqSearch";
-import FaqCategoryCards from "../components/faq/FaqCategoryCards";
-import FaqPopularQuestions from "../components/faq/FaqPopularQuestions";
-import FaqTabs from "../components/faq/FaqTabs";
-import FaqGroups from "../components/faq/FaqGroups";
-import FaqContact from "../components/faq/FaqContact";
+import { faqData, tabs } from "@/data/faqData";
+import FaqHero from "@/components/faq/FaqHero";
+import FaqSearch from "@/components/faq/FaqSearch";
+import FaqCategoryCards from "@/components/faq/FaqCategoryCards";
+import FaqPopularQuestions from "@/components/faq/FaqPopularQuestions";
+import FaqTabs from "@/components/faq/FaqTabs";
+import FaqGroups from "@/components/faq/FaqGroups";
+import FaqContact from "@/components/faq/FaqContact";
 
 export default function FaqPage() {
   const [activeTab, setActiveTab] = useState("all");

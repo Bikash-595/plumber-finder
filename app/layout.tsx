@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import PlumberFinderFooter from "@/components/PlumberFinderFooter";
 
 export const metadata: Metadata = {
   title: "Plumber Finder - Find Trusted Plumbers Near You",
@@ -15,11 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-white text-gray-800">
-        <Header />
-        <main className="flex-1 pt-24">{children}</main>
-        <PlumberFinderFooter />
-      </body>
+      <body className="min-h-full bg-white text-gray-800">{children}</body>
     </html>
   );
 }

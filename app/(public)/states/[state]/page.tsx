@@ -3,8 +3,8 @@
 import { use } from "react";
 import { notFound } from "next/navigation";
 import { plumbers } from "@/data/plumbers";
-import { getStateAbbr } from "../../components/utils/location";
-import StateCityFilterSidebar from "../../components/find/StateCityFilterSidebar";
+import { getStateAbbr } from "@/components/utils/location";
+import StateCityFilterSidebar from "@/components/find/StateCityFilterSidebar";
 import ResultsHeader from "@/components/find/ResultsHeader";
 import PlumberCardGrid from "@/components/find/PlumberCardGrid";
 import PlumberCardList from "@/components/find/PlumberCardList";

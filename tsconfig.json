@@ -19,7 +19,9 @@
       }
     ],
     "paths": {
-      "@/*": ["./app/*"]
+      "@/*": ["./app/*"],
+      "@plumber/api-client": ["./packages/api-client/src"],
+      "@plumber/shared": ["./packages/shared/src"]
     }
   },
   "include": [

@@ -1,5 +1,24 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Separation
+
+The current working app still lives in `app/`.
+
+New separated project scaffolds are available in:
+
+- `apps/public`
+- `apps/user-dashboard`
+- `apps/plumber-company`
+- `apps/freelancer-plumber`
+- `apps/admin`
+
+Shared backend/client code lives in:
+
+- `packages/api-client`
+- `packages/shared`
+
+See `docs/project-separation.md` for the migration map and backend scope conventions.
+
 ## Getting Started
 
 First, run the development server:

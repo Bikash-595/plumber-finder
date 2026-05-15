@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
-import { storeUser } from "../components/utils/auth";
+import { storeUser } from "@/components/utils/auth";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { plumbers } from "@/data/plumbers";
-import StateCityFilterSidebar from "../components/find/StateCityFilterSidebar";
+import StateCityFilterSidebar from "@/components/find/StateCityFilterSidebar";
 import ResultsHeader from "@/components/find/ResultsHeader";
 import PlumberCardGrid from "@/components/find/PlumberCardGrid";
 import PlumberCardList from "@/components/find/PlumberCardList";

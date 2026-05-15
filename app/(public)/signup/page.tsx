@@ -406,10 +406,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import SignupChooseType from "../components/signup/SignupChooseType";
-import SignupSeekerForm from "../components/signup/SignupSeekerForm";
-import SignupCompanyForm from "../components/signup/SignupCompanyForm";
-import { storeUser } from "../components/utils/auth";
+import SignupChooseType from "@/components/signup/SignupChooseType";
+import SignupSeekerForm from "@/components/signup/SignupSeekerForm";
+import SignupCompanyForm from "@/components/signup/SignupCompanyForm";
+import { storeUser } from "@/components/utils/auth";
 
 export default function SignupPage() {
   const [step, setStep] = useState<"choose" | "form">("choose");

@@ -123,7 +123,7 @@ export default function DashboardSidebar({
         <button
           type="button"
           onClick={onToggle}
-          className="fixed left-4 top-28 z-50 flex h-11 w-11 items-center justify-center rounded-lg bg-transparent text-black transition hover:text-[#0b1f3b]"
+          className="fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-lg bg-transparent text-black transition hover:text-[#0b1f3b]"
           aria-label="Open sidebar"
         >
           <TbSquareToggle className="h-6 w-6" />
