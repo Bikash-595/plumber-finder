@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { use, useEffect, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 import { plumbers } from "@/data/plumbers";
