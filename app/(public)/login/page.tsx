@@ -11,6 +11,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [accountType, setAccountType] = useState<"seeker" | "company">("seeker");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -20,9 +21,9 @@ export default function LoginPage() {
       name,
       email,
       avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
-      accountType: "seeker",
+      accountType,
     });
-    router.push("/");
+    router.push(accountType === "company" ? "/company-dashboard" : "/dashboard");
   };
 
   return (
@@ -82,6 +83,31 @@ export default function LoginPage() {
 
             {/* Email/Password Form */}
             <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
+                  Account Type
+                </label>
+                <div className="mt-2 grid grid-cols-2 gap-2 rounded-full border border-gray-200 bg-gray-50 p-1">
+                  {[
+                    { label: "Customer", value: "seeker" },
+                    { label: "Company", value: "company" },
+                  ].map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setAccountType(option.value as "seeker" | "company")}
+                      className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                        accountType === option.value
+                          ? "bg-[#FFD60A] text-[#0b1f3b] shadow-sm"
+                          : "text-gray-500 hover:text-gray-900"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="group">
                 <label
                   htmlFor="email"

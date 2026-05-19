@@ -17,7 +17,7 @@ const generateBlogs = (ownerName) => {
 
   const slugs = titles.map((title) => title.toLowerCase().replace(/\s/g, "-"));
   const images = [
-    "https://images.unsplash.com/photo-1581092335871-4e5f9e8a1d9b?w=800",
+    "/Plumber working under a modern sink.png",
     "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800",
     "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800",
     "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=800",

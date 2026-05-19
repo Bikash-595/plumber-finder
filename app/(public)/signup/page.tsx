@@ -432,13 +432,15 @@ export default function SignupPage() {
   };
 
   const handleSignupComplete = (name: string, email: string) => {
+    const selectedAccountType = accountType ?? "seeker";
+
     storeUser({
       name,
       email,
       avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
-      accountType: accountType ?? "seeker",
+      accountType: selectedAccountType,
     });
-    router.push("/");
+    router.push(selectedAccountType === "company" ? "/company-dashboard" : "/dashboard");
   };
 
   return (

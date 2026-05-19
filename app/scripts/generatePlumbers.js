@@ -219,7 +219,7 @@ const streets = ["Main", "Oak", "Maple", "Cedar", "Pine", "Elm", "Washington", "
 
 // Project images
 const projectImages = [
-  "https://images.unsplash.com/photo-1581092335871-4e5f9e8a1d9b?w=800",
+  "/Plumber working under a modern sink.png",
   "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800",
   "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=800",
   "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800",

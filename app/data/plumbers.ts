@@ -5951,7 +5951,7 @@ const rawPlumbers = [
         title: "Luxury High‑rise Repiping",
         client: "The Plaza",
         description: "Complete replacement of aging pipes in a 40‑story building. Used eco‑friendly materials and minimized disruption.",
-        image: "https://images.unsplash.com/photo-1581092335871-4e5f9e8a1d9b?w=800",
+        image: "/Plumber working under a modern sink.png",
         year: 2023,
         clientRating: 4.8,
         clientReview: "Excellent work! Very professional and finished ahead of schedule.",
@@ -6269,7 +6269,7 @@ const rawPlumbers = [
     languages: ["English", "Spanish"],
     media: {
       images: [
-        "https://images.unsplash.com/photo-1581092335871-4e5f9e8a1d9b?w=800",
+        "/Plumber working under a modern sink.png",
         "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=800"
       ],
       videos: []
