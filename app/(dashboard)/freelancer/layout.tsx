@@ -1,36 +1,38 @@
 "use client";
 
 import { ReactNode, useState } from "react";
-import CompanyFooter from "@/components/company-dashboard/CompanyFooter";
-import CompanyNavbar from "@/components/company-dashboard/CompanyNavbar";
-import CompanySidebar from "@/components/company-dashboard/CompanySidebar";
-import type { CompanySidebarState } from "@/components/company-dashboard/companyDashboardData";
+import FreelancerSidebar from "@/components/freelancer-dashboard/FreelancerSidebar";
+import FreelancerFooter from "@/components/freelancer-dashboard/FreelancerFooter";
+import FreelancerNavbar from "@/components/freelancer-dashboard/FreelancerNavbar";
+import type { FreelancerSidebarState } from "@/components/freelancer-dashboard/freelancerDashboardData";
 
-const nextSidebarState = (state: CompanySidebarState): CompanySidebarState => {
+const nextSidebarState = (
+  state: FreelancerSidebarState
+): FreelancerSidebarState => {
   if (state === "open") return "icons";
   if (state === "icons") return "closed";
   return "open";
 };
 
-const getDesktopSidebarWidth = (state: CompanySidebarState) => {
+const getDesktopSidebarWidth = (state: FreelancerSidebarState) => {
   if (state === "open") return "lg:w-72";
   if (state === "icons") return "lg:w-20";
   return "lg:w-0";
 };
 
-const getMobileSidebarWidth = (state: CompanySidebarState) => {
+const getMobileSidebarWidth = (state: FreelancerSidebarState) => {
   if (state === "open") return "w-72";
   return "w-20";
 };
 
-export default function CompanyDashboardLayout({ children }: { children: ReactNode }) {
+export default function FreelancerLayout({ children }: { children: ReactNode }) {
   const [mobileSidebarState, setMobileSidebarState] =
-    useState<CompanySidebarState>("closed");
+    useState<FreelancerSidebarState>("closed");
   const [desktopSidebarState, setDesktopSidebarState] =
-    useState<CompanySidebarState>("open");
+    useState<FreelancerSidebarState>("open");
 
   const mobileSidebar = (
-    <CompanySidebar
+    <FreelancerSidebar
       sidebarState={mobileSidebarState}
       onLinkClick={() => setMobileSidebarState("closed")}
       onToggle={() => setMobileSidebarState(nextSidebarState)}
@@ -40,7 +42,9 @@ export default function CompanyDashboardLayout({ children }: { children: ReactNo
   return (
     <div className="flex min-h-screen flex-col bg-gray-100">
       <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
-        <CompanyNavbar onToggleSidebar={() => setMobileSidebarState(nextSidebarState)} />
+        <FreelancerNavbar
+          onToggleSidebar={() => setMobileSidebarState(nextSidebarState)}
+        />
       </header>
 
       <div className="flex flex-1">
@@ -49,7 +53,7 @@ export default function CompanyDashboardLayout({ children }: { children: ReactNo
             desktopSidebarState
           )}`}
         >
-          <CompanySidebar
+          <FreelancerSidebar
             sidebarState={desktopSidebarState}
             onToggle={() => setDesktopSidebarState(nextSidebarState)}
           />
@@ -80,7 +84,7 @@ export default function CompanyDashboardLayout({ children }: { children: ReactNo
       </div>
 
       <footer className="w-full border-t bg-white shadow-sm">
-        <CompanyFooter />
+        <FreelancerFooter />
       </footer>
     </div>
   );

@@ -409,14 +409,15 @@ import { useRouter } from "next/navigation";
 import SignupChooseType from "@/components/signup/SignupChooseType";
 import SignupSeekerForm from "@/components/signup/SignupSeekerForm";
 import SignupCompanyForm from "@/components/signup/SignupCompanyForm";
+import SignupFreelancerForm from "@/components/signup/SignupFreelancerForm";
 import { storeUser } from "@/components/utils/auth";
 
 export default function SignupPage() {
   const [step, setStep] = useState<"choose" | "form">("choose");
-  const [accountType, setAccountType] = useState<"seeker" | "company" | null>(null);
+  const [accountType, setAccountType] = useState<"seeker" | "company" | "freelancer" | null>(null);
   const router = useRouter();
 
-  const handleSelectType = (type: "seeker" | "company") => {
+  const handleSelectType = (type: "seeker" | "company" | "freelancer") => {
     setAccountType(type);
   };
 
@@ -440,7 +441,13 @@ export default function SignupPage() {
       avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
       accountType: selectedAccountType,
     });
-    router.push(selectedAccountType === "company" ? "/company-dashboard" : "/dashboard");
+    router.push(
+      selectedAccountType === "company"
+        ? "/company-dashboard"
+        : selectedAccountType === "freelancer"
+        ? "/freelancer"
+        : "/dashboard"
+    );
   };
 
   return (
@@ -463,6 +470,8 @@ export default function SignupPage() {
               />
             ) : accountType === "seeker" ? (
               <SignupSeekerForm onBack={handleBack} onComplete={handleSignupComplete} />
+            ) : accountType === "freelancer" ? (
+              <SignupFreelancerForm onBack={handleBack} onComplete={handleSignupComplete} />
             ) : (
               <SignupCompanyForm onBack={handleBack} onComplete={handleSignupComplete} />
             )}

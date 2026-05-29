@@ -4,7 +4,7 @@ export type AppUser = {
   name: string;
   email: string;
   avatarUrl?: string;
-  accountType?: "seeker" | "company";
+  accountType?: "seeker" | "company" | "freelancer";
 };
 
 export const AUTH_STORAGE_KEY = "plumberfinder_user";

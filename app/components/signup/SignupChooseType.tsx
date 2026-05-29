@@ -134,8 +134,8 @@
 import Link from "next/link";
 
 interface SignupChooseTypeProps {
-  accountType: "seeker" | "company" | null;
-  onSelectType: (type: "seeker" | "company") => void;
+  accountType: "seeker" | "company" | "freelancer" | null;
+  onSelectType: (type: "seeker" | "company" | "freelancer") => void;
   onContinue: () => void;
 }
 
@@ -195,6 +195,24 @@ export default function SignupChooseType({
           </h2>
           <p className="mt-2 text-sm text-gray-600">
             List your business and get leads from thousands of users.
+          </p>
+        </button>
+
+        {/* Freelancer Card */}
+        <button
+          onClick={() => onSelectType("freelancer")}
+          className={`group rounded-2xl border p-6 text-left transition-all hover:shadow-md hover:scale-[1.02] ${
+            accountType === "freelancer"
+              ? "border-[#FFD60A] bg-[#FFD60A]/5 shadow-md"
+              : "border-gray-200 bg-white hover:border-[#FFD60A]"
+          }`}
+        >
+          <div className="mb-4 text-4xl">🧰</div>
+          <h2 className="text-xl font-bold text-gray-900 font-heading">
+            I&apos;m a Freelancer Plumber
+          </h2>
+          <p className="mt-2 text-sm text-gray-600">
+            Offer plumbing services individually and manage your own leads.
           </p>
         </button>
       </div>

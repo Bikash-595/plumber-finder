@@ -3,41 +3,47 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, useState } from "react";
-import { FaCheckCircle, FaChevronRight, FaSignOutAlt, FaTools } from "react-icons/fa";
+import { FaCheckCircle, FaChevronRight, FaSignOutAlt, FaUserTie } from "react-icons/fa";
 import { TbSquareToggle } from "react-icons/tb";
 import { clearStoredUser } from "@/components/utils/auth";
 import {
-  companyNavSections,
-  type CompanySidebarState,
-} from "./companyDashboardData";
+  freelancerNavSections,
+  type FreelancerSidebarState,
+} from "./freelancerDashboardData";
 
-interface CompanySidebarProps {
-  sidebarState?: CompanySidebarState;
+interface FreelancerSidebarProps {
+  sidebarState?: FreelancerSidebarState;
   onLinkClick?: () => void;
   onToggle?: () => void;
 }
 
 function isRouteActive(pathname: string, href: string) {
-  if (href === "/company-dashboard") return pathname === href;
+  if (href === "/freelancer") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
-  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+  return (
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey ||
+    event.button !== 0
+  );
 }
 
-export default function CompanySidebar({
+export default function FreelancerSidebar({
   sidebarState = "open",
   onLinkClick,
   onToggle,
-}: CompanySidebarProps) {
+}: FreelancerSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [openSections, setOpenSections] = useState<string[]>([]);
   const activeSection =
-    companyNavSections.find((section) =>
+    freelancerNavSections.find((section) =>
       section.items.some((item) => isRouteActive(pathname, item.href))
-    )?.label || companyNavSections[0].label;
+    )?.label || freelancerNavSections[0].label;
 
   const toggleSection = (sectionLabel: string) => {
     setOpenSections((current) =>
@@ -67,7 +73,7 @@ export default function CompanySidebar({
           type="button"
           onClick={onToggle}
           className="fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-lg bg-transparent text-black transition hover:text-[#0b1f3b]"
-          aria-label="Open company sidebar"
+          aria-label="Open freelancer sidebar"
         >
           <TbSquareToggle className="h-6 w-6" />
         </button>
@@ -76,7 +82,7 @@ export default function CompanySidebar({
   }
 
   if (sidebarState === "icons") {
-    const iconItems = companyNavSections.flatMap((section) => section.items);
+    const iconItems = freelancerNavSections.flatMap((section) => section.items);
 
     return (
       <aside className="flex h-full w-20 flex-shrink-0 flex-col items-center overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] py-4 text-white shadow-xl">
@@ -84,7 +90,7 @@ export default function CompanySidebar({
           type="button"
           onClick={onToggle}
           className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-[#FFD60A] text-[#0b1f3b] transition hover:bg-white"
-          aria-label="Open company sidebar"
+          aria-label="Open freelancer sidebar"
         >
           <TbSquareToggle className="h-5 w-5" />
         </button>
@@ -129,19 +135,19 @@ export default function CompanySidebar({
       <div className="border-b border-white/10 px-5 py-5">
         <div className="flex items-center gap-3">
           <Link
-            href="/company-dashboard"
-            onClick={(event) => handleNavClick(event, "/company-dashboard")}
+            href="/freelancer"
+            onClick={(event) => handleNavClick(event, "/freelancer")}
             className="flex min-w-0 flex-1 items-center gap-3"
           >
             <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#FFD60A] text-[#0b1f3b] shadow-sm">
-              <FaTools className="h-5 w-5" />
+              <FaUserTie className="h-5 w-5" />
             </span>
             <span className="min-w-0">
               <span className="block truncate text-base font-bold tracking-wide !text-white">
                 Plumber Finder
               </span>
               <span className="block truncate text-xs font-medium !text-white/60">
-                Company Dashboard
+                Freelancer Dashboard
               </span>
             </span>
           </Link>
@@ -150,7 +156,7 @@ export default function CompanySidebar({
               type="button"
               onClick={onToggle}
               className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-white transition hover:border-[#FFD60A] hover:bg-[#FFD60A] hover:text-[#0b1f3b]"
-              aria-label="Collapse company sidebar"
+              aria-label="Collapse freelancer sidebar"
             >
               <TbSquareToggle className="h-5 w-5" />
             </button>
@@ -164,9 +170,9 @@ export default function CompanySidebar({
             <FaCheckCircle className="h-4 w-4" />
           </span>
           <div className="min-w-0">
-            <p className="text-sm font-semibold !text-white">Business ready</p>
+            <p className="text-sm font-semibold !text-white">Ready to work</p>
             <p className="mt-1 text-xs leading-5 !text-white/60">
-              Leads, jobs, team, reviews, services, billing, and settings in one place.
+              Keep your profile live, chase leads, and manage jobs from one screen.
             </p>
           </div>
         </div>
@@ -174,7 +180,7 @@ export default function CompanySidebar({
 
       <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-5">
         <div className="space-y-2">
-          {companyNavSections.map((section) => {
+          {freelancerNavSections.map((section) => {
             const isOpen = section.label === activeSection || openSections.includes(section.label);
 
             return (
@@ -185,7 +191,7 @@ export default function CompanySidebar({
                   className={`mb-1 flex min-h-9 w-full items-center justify-between rounded-lg px-3 text-left text-[11px] font-bold uppercase tracking-wider transition ${
                     isOpen
                       ? "bg-white/10 !text-white"
-                      : "text-white/80 hover:bg-white/[0.06] hover:text-white"
+                      : "!text-white/45 hover:bg-white/[0.06] hover:!text-white/75"
                   }`}
                 >
                   <span>{section.label}</span>
@@ -224,13 +230,13 @@ export default function CompanySidebar({
                             >
                               <Icon
                                 className={`h-4 w-4 ${
-                                  isActive ? "!text-[#0b1f3b]" : "!text-white group-hover:!text-white"
+                                  isActive ? "!text-[#0b1f3b]" : "!text-white/70 group-hover:!text-white"
                                 }`}
                               />
                             </span>
                             <span
                               className={`truncate ${
-                                isActive ? "!text-[#0b1f3b]" : "!text-white group-hover:!text-white"
+                                isActive ? "!text-[#0b1f3b]" : "!text-white/80 group-hover:!text-white"
                               }`}
                             >
                               {item.label}
@@ -257,10 +263,8 @@ export default function CompanySidebar({
           className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold !text-red-200 transition-all duration-200 hover:bg-red-500/15 hover:!text-white"
         >
           <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500/10">
-              <FaSignOutAlt className="h-4 w-4" />
-            </span>
-            <span>Logout</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500/10">👋</span>
+            Logout
           </div>
         </button>
       </div>

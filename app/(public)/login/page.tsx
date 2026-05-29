@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [accountType, setAccountType] = useState<"seeker" | "company">("seeker");
+  const [accountType, setAccountType] = useState<"seeker" | "company" | "freelancer">("seeker");
   const router = useRouter();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -23,7 +23,13 @@ export default function LoginPage() {
       avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
       accountType,
     });
-    router.push(accountType === "company" ? "/company-dashboard" : "/dashboard");
+    router.push(
+      accountType === "company"
+        ? "/company-dashboard"
+        : accountType === "freelancer"
+        ? "/freelancer"
+        : "/dashboard"
+    );
   };
 
   return (
@@ -91,11 +97,12 @@ export default function LoginPage() {
                   {[
                     { label: "Customer", value: "seeker" },
                     { label: "Company", value: "company" },
+                    { label: "Freelancer", value: "freelancer" },
                   ].map((option) => (
                     <button
                       key={option.value}
                       type="button"
-                      onClick={() => setAccountType(option.value as "seeker" | "company")}
+                      onClick={() => setAccountType(option.value as "seeker" | "company" | "freelancer")}
                       className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                         accountType === option.value
                           ? "bg-[#FFD60A] text-[#0b1f3b] shadow-sm"

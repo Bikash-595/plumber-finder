@@ -51,6 +51,8 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
   const displayName = user?.name || "Guest User";
   const displayEmail = user?.email || "customer@plumberfinder.com";
   const initials = getInitials(displayName) || "GU";
+  const quickLinkActive = "bg-[#FFD60A] text-[#0b1f3b]";
+  const quickLinkDefault = "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
 
   const handleLogout = () => {
     clearStoredUser();
@@ -59,7 +61,7 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 backdrop-blur text-gray-900">
       <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <button
@@ -81,7 +83,7 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
           </div>
         </div>
 
-        <div className="hidden min-w-[240px] max-w-md flex-1 items-center rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-500 lg:flex">
+        <div className="hidden min-w-[240px] max-w-md flex-1 items-center rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-gray-500 md:flex">
           <FaSearch className="h-4 w-4 flex-shrink-0" />
           <input
             type="search"
@@ -89,8 +91,7 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
             className="ml-3 w-full bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400"
           />
         </div>
-
-        <nav className="hidden items-center gap-1 xl:flex" aria-label="Dashboard quick links">
+        <nav className="hidden items-center gap-1 md:flex" aria-label="Dashboard quick links">
           {quickLinks.map((link) => {
             const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
 
@@ -98,17 +99,32 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
-                  isActive
-                    ? "bg-[#0b1f3b] text-white"
-                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
-                }`}
+                className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${isActive ? quickLinkActive : quickLinkDefault}`}
               >
                 {link.label}
               </Link>
             );
           })}
         </nav>
+
+        {/* Mobile quick links */}
+        <div className="md:hidden w-full border-t border-gray-100 bg-white/95 px-3 py-2">
+          <div className="-mx-1 flex w-full gap-2 overflow-x-auto px-1">
+            {quickLinks.map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`inline-flex shrink-0 items-center rounded-lg px-3 py-2 text-sm font-semibold transition ${isActive ? quickLinkActive : "text-gray-700 hover:bg-gray-100"}`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
 
         <div className="flex items-center gap-2">
           <Link
