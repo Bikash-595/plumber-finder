@@ -6,7 +6,11 @@ import { type MouseEvent, useState } from "react";
 import { FaChevronRight, FaCheckCircle, FaSignOutAlt, FaTools } from "react-icons/fa";
 import { TbSquareToggle } from "react-icons/tb";
 import { clearStoredUser } from "@/components/utils/auth";
-import { adminNavSections, type AdminSidebarState } from "./adminDashboardData";
+import {
+  adminNavSections,
+  type AdminNavItem,
+  type AdminSidebarState,
+} from "./adminDashboardData";
 
 interface AdminSidebarProps {
   sidebarState?: AdminSidebarState;
@@ -201,34 +205,61 @@ export default function AdminSidebar({
 
                 {isOpen && (
                   <div className="space-y-1 pb-2">
-                    {section.items.map((item) => {
+                    {section.items.map((item: AdminNavItem) => {
                       const Icon = item.icon;
                       const isActive = isRouteActive(pathname, item.href);
 
                       return (
-                        <Link
-                          key={item.href}
-                          href={item.href}
-                          onClick={(event) => handleNavClick(event, item.href)}
-                          className={`group relative flex min-h-11 items-center justify-between rounded-lg px-3 py-2.5 pl-4 text-sm font-semibold transition-all duration-200 ${
-                            isActive
-                              ? "bg-[#FFD60A] text-[#0b1f3b] shadow-md shadow-black/10"
-                              : "text-white/80 hover:bg-white/[0.08] hover:text-white"
-                          }`}
-                        >
-                          {isActive && (
-                            <span className="absolute bottom-2 left-1 top-2 w-1 rounded-full bg-[#0b1f3b]" />
+                        <div key={item.href}>
+                          <Link
+                            href={item.href}
+                            onClick={(event) => handleNavClick(event, item.href)}
+                            className={`group relative flex min-h-11 items-center justify-between rounded-lg px-3 py-2.5 pl-4 text-sm font-semibold transition-all duration-200 ${
+                              isActive
+                                ? "bg-[#FFD60A] text-[#0b1f3b] shadow-md shadow-black/10"
+                                : "text-white/80 hover:bg-white/[0.08] hover:text-white"
+                            }`}
+                          >
+                            {isActive && (
+                              <span className="absolute bottom-2 left-1 top-2 w-1 rounded-full bg-[#0b1f3b]" />
+                            )}
+                            <div className="flex min-w-0 items-center gap-3">
+                              <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md ${
+                                isActive ? "bg-[#0b1f3b]/10" : "bg-white/5 group-hover:bg-white/[0.08]"
+                              }`}>
+                                <Icon className={`h-4 w-4 ${isActive ? "text-[#0b1f3b]" : "text-white/70 group-hover:text-white"}`} />
+                              </span>
+                              <span className="truncate">{item.label}</span>
+                            </div>
+                            {isActive && <FaChevronRight className="h-3.5 w-3.5 text-[#0b1f3b]" />}
+                          </Link>
+
+                          {item.stats && isActive && (
+                            <div className="mt-2 grid grid-cols-1 gap-2 rounded-2xl border border-white/10 bg-white/5 p-3 text-[11px] text-white/80">
+                              {item.stats.map((stat) => (
+                                <div key={stat.label} className="flex items-center justify-between gap-2">
+                                  <span className="truncate text-white/80">{stat.label}</span>
+                                  <span className="font-semibold text-white">{stat.value}</span>
+                                </div>
+                              ))}
+                            </div>
                           )}
-                          <div className="flex min-w-0 items-center gap-3">
-                            <span className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md ${
-                              isActive ? "bg-[#0b1f3b]/10" : "bg-white/5 group-hover:bg-white/[0.08]"
-                            }`}>
-                              <Icon className={`h-4 w-4 ${isActive ? "text-[#0b1f3b]" : "text-white/70 group-hover:text-white"}`} />
-                            </span>
-                            <span className="truncate">{item.label}</span>
-                          </div>
-                          {isActive && <FaChevronRight className="h-3.5 w-3.5 text-[#0b1f3b]" />}
-                        </Link>
+
+                          {item.subItems && isActive && (
+                            <div className="mt-2 space-y-1 rounded-2xl border border-white/10 bg-white/5 p-2 text-sm text-white/80">
+                              {item.subItems.map((subItem) => (
+                                <Link
+                                  key={subItem.href}
+                                  href={subItem.href}
+                                  onClick={(event) => handleNavClick(event, subItem.href)}
+                                  className="block rounded-xl px-3 py-2 transition hover:bg-white/[0.08] hover:text-white"
+                                >
+                                  {subItem.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       );
                     })}
                   </div>

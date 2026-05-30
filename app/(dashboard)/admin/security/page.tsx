@@ -1,27 +1,30 @@
-import AdminSectionPage from "@/components/admin-dashboard/AdminSectionPage";
-
-const policies = [
-  { label: "Multi-factor auth", status: "Enabled" },
-  { label: "Session timeout", status: "30 mins" },
-  { label: "Password policy", status: "Strong" },
-];
+import AdminPlaceholderPage from "@/components/admin-dashboard/AdminPlaceholderPage";
 
 export default function AdminSecurityPage() {
   return (
-    <AdminSectionPage
+    <AdminPlaceholderPage
       title="Security Settings"
-      description="Review security controls, access policies, and platform protection settings."
+      description="Review platform security policies, access control, fraud prevention, and audit logs."
+      actionLabel="Back to admin"
+      actionHref="/admin"
     >
-      <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div className="grid gap-4 sm:grid-cols-3">
-          {policies.map((policy) => (
-            <div key={policy.label} className="rounded-2xl bg-gray-50 p-5">
-              <p className="text-sm font-semibold text-gray-500">{policy.label}</p>
-              <p className="mt-3 text-xl font-bold text-gray-900">{policy.status}</p>
-            </div>
-          ))}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Active protections</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">7</p>
+          <p className="mt-2 text-sm text-slate-600">Enabled security rules</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Suspicious logins</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">14</p>
+          <p className="mt-2 text-sm text-slate-600">Flagged sessions</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Audit log entries</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">1,206</p>
+          <p className="mt-2 text-sm text-slate-600">Recent security events</p>
         </div>
       </div>
-    </AdminSectionPage>
+    </AdminPlaceholderPage>
   );
 }

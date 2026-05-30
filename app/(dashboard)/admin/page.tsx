@@ -13,7 +13,11 @@ const cards = [
   { label: "Manage users", href: "/admin/users" },
   { label: "Manage companies", href: "/admin/companies" },
   { label: "Manage freelancers", href: "/admin/freelancers" },
-  { label: "Review analytics", href: "/admin/analytics" },
+  { label: "Manage bookings", href: "/admin/bookings" },
+  { label: "Manage payments", href: "/admin/payments" },
+  { label: "Manage reviews", href: "/admin/reviews" },
+  { label: "Service categories", href: "/admin/categories" },
+  { label: "Support center", href: "/admin/support" },
 ];
 
 export default function AdminOverviewPage() {

@@ -1,7 +1,7 @@
 // app/checkout/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaTrashAlt, FaShoppingCart, FaCcVisa, FaCcMastercard, FaPaypal, FaLock } from "react-icons/fa";
@@ -23,17 +23,13 @@ const initialCart: CartItem[] = [
 ];
 
 export default function CartPage() {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [cart, setCart] = useState<CartItem[]>(() => initialCart);
+  const [loading, setLoading] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [discount, setDiscount] = useState(0);
   const [promoApplied, setPromoApplied] = useState(false);
 
-  useEffect(() => {
-    // Simulate loading from API/context
-    setCart(initialCart);
-    setLoading(false);
-  }, []);
+  // Cart initialized lazily from `initialCart` to avoid setting state inside an effect
 
   const updateQuantity = (id: string, delta: number) => {
     setCart((prev) =>

@@ -1,28 +1,30 @@
-import AdminSectionPage from "@/components/admin-dashboard/AdminSectionPage";
-
-const settings = [
-  { label: "Platform mode", value: "Live" },
-  { label: "Email notifications", value: "Enabled" },
-  { label: "Data retention", value: "12 months" },
-];
+import AdminPlaceholderPage from "@/components/admin-dashboard/AdminPlaceholderPage";
 
 export default function AdminSettingsPage() {
   return (
-    <AdminSectionPage
-      title="Admin Settings"
-      description="Configure global behavior and platform policies for users, companies, and freelancers."
+    <AdminPlaceholderPage
+      title="Platform Settings"
+      description="Control platform defaults, appearance, policies, and global account settings."
+      actionLabel="Back to admin"
+      actionHref="/admin"
     >
-      <div className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        {settings.map((item) => (
-          <div key={item.label} className="flex flex-col gap-2 rounded-2xl bg-gray-50 p-4">
-            <div className="flex items-center justify-between gap-3">
-              <p className="text-base font-semibold text-gray-900">{item.label}</p>
-              <span className="rounded-full bg-[#0b1f3b] px-3 py-1 text-xs font-semibold text-white">{item.value}</span>
-            </div>
-            <p className="text-sm text-gray-500">Manage advanced settings, notifications, and platform governance from here.</p>
-          </div>
-        ))}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Localization</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">12</p>
+          <p className="mt-2 text-sm text-slate-600">Languages enabled</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Site mode</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">Live</p>
+          <p className="mt-2 text-sm text-slate-600">Production environment</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Feature flags</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">8</p>
+          <p className="mt-2 text-sm text-slate-600">Active toggles</p>
+        </div>
       </div>
-    </AdminSectionPage>
+    </AdminPlaceholderPage>
   );
 }

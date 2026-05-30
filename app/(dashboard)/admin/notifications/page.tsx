@@ -1,25 +1,30 @@
-import AdminSectionPage from "@/components/admin-dashboard/AdminSectionPage";
-
-const events = [
-  { title: "New user signup", detail: "3 new users registered today" },
-  { title: "Company verification", detail: "2 companies pending review" },
-  { title: "Freelancer report", detail: "1 report needs attention" },
-];
+import AdminPlaceholderPage from "@/components/admin-dashboard/AdminPlaceholderPage";
 
 export default function AdminNotificationsPage() {
   return (
-    <AdminSectionPage
+    <AdminPlaceholderPage
       title="Notifications"
-      description="Monitor system alerts and admin notifications across users, companies, and freelancers."
+      description="Set up alerts, email campaigns, in-app notifications, and system announcements."
+      actionLabel="Back to admin"
+      actionHref="/admin"
     >
-      <div className="space-y-4 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        {events.map((event) => (
-          <div key={event.title} className="rounded-2xl bg-gray-50 p-4">
-            <p className="text-base font-semibold text-gray-900">{event.title}</p>
-            <p className="mt-2 text-sm text-gray-500">{event.detail}</p>
-          </div>
-        ))}
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Automated alerts</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">27</p>
+          <p className="mt-2 text-sm text-slate-600">Live automations</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Announcements</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">5</p>
+          <p className="mt-2 text-sm text-slate-600">Messages scheduled</p>
+        </div>
+        <div className="rounded-2xl bg-slate-50 p-5 shadow-sm">
+          <p className="text-sm font-semibold text-slate-500">Push notifications</p>
+          <p className="mt-3 text-3xl font-bold text-slate-900">12</p>
+          <p className="mt-2 text-sm text-slate-600">Campaign channels</p>
+        </div>
       </div>
-    </AdminSectionPage>
+    </AdminPlaceholderPage>
   );
 }

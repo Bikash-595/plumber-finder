@@ -50,6 +50,24 @@ export default function AdminFreelancersPage() {
           />
         </div>
 
+        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Verified pros</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">86</p>
+            <p className="mt-2 text-xs text-slate-500">Freelancers approved for platform work.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Pending approvals</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">15</p>
+            <p className="mt-2 text-xs text-slate-500">Applications waiting for review.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Top specialties</p>
+            <p className="mt-3 text-base font-semibold text-slate-900">Drain repair, Heater service</p>
+            <p className="mt-2 text-xs text-slate-500">Services most often assigned to freelancers.</p>
+          </div>
+        </div>
+
         <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {filteredFreelancers.map((freelancer) => (
             <div key={freelancer.name} className="rounded-2xl border border-gray-200 bg-gray-50 p-5">

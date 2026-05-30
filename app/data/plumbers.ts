@@ -5886,6 +5886,78 @@ function buildDefaultFaqs(plumber: Plumber): NonNullable<Plumber["faqs"]> {
   ];
 }
 
+function slugifyProjectId(value: string, fallback: string) {
+  const slug = value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+  return slug || fallback;
+}
+
+function getClientType(client: string) {
+  const normalized = client.toLowerCase();
+
+  if (normalized.includes("hotel")) return "Hospitality";
+  if (normalized.includes("school") || normalized.includes("district")) return "Education";
+  if (normalized.includes("restaurant") || normalized.includes("grill") || normalized.includes("cafe")) return "Food service";
+  if (normalized.includes("apartment") || normalized.includes("condo") || normalized.includes("residence")) return "Multi-family residential";
+  if (normalized.includes("home") || normalized.includes("rowhouse")) return "Residential homeowner";
+  if (normalized.includes("city") || normalized.includes("hospital")) return "Public facility";
+
+  return "Commercial client";
+}
+
+function inferProjectCategory(project: Plumber["projects"][number], plumber: Plumber) {
+  const text = `${project.title} ${project.description}`.toLowerCase();
+
+  if (text.includes("water heater") || text.includes("tankless")) return "Water heater installation";
+  if (text.includes("sewer")) return "Sewer line service";
+  if (text.includes("drain") || text.includes("clog")) return "Drain and cleaning service";
+  if (text.includes("leak") || text.includes("pipe") || text.includes("repipe")) return "Pipe and leak repair";
+  if (text.includes("sump")) return "Pump system installation";
+  if (text.includes("backflow")) return "Backflow prevention";
+
+  return plumber.specializations[0] ?? plumber.services[0] ?? "Plumbing project";
+}
+
+function enrichProjects(plumber: Plumber): Plumber["projects"] {
+  return (plumber.projects ?? []).map((project, index) => {
+    const category = inferProjectCategory(project, plumber);
+    const completedAt = `${project.year}-${String(Math.min(index + 2, 12)).padStart(2, "0")}-15`;
+    const projectCost = project.projectCost ?? Math.max(plumber.averageCost * (index + 6), 2400);
+    const durationDays = project.durationDays ?? Math.max(index + 2, Math.round(projectCost / 9000));
+    const clientRating = project.clientRating ?? Math.min(5, Number((plumber.rating + (index % 2 === 0 ? 0.1 : -0.1)).toFixed(1)));
+
+    return {
+      ...project,
+      id: project.id ?? slugifyProjectId(project.title, `project-${index + 1}`),
+      clientRating,
+      durationDays,
+      projectCost,
+      clientReview:
+        project.clientReview ??
+        `${plumber.companyName} kept the work organized, communicated clearly, and delivered the project as promised.`,
+      clientDetails: project.clientDetails ?? {
+        name: project.client,
+        type: getClientType(project.client),
+        location: plumber.location,
+        contactPerson: plumber.ownerName,
+      },
+      projectDetails: project.projectDetails ?? {
+        category,
+        scope: project.description,
+        challenge: `The client needed dependable ${category.toLowerCase()} work with limited disruption and a clear completion schedule.`,
+        solution: `${plumber.companyName} assigned a licensed crew, completed diagnostics, installed the required materials, tested the system, and walked the client through maintenance and warranty coverage.`,
+        materials: plumber.services.slice(0, 4),
+        teamSize: Math.max(2, Math.min(plumber.teamSize, 8)),
+        warranty: plumber.warranty,
+        completedAt,
+      },
+    };
+  });
+}
+
 const rawPlumbers = [
   {
     id: "1",
@@ -6558,8 +6630,11 @@ const rawPlumbers = [
 // Build final plumbers array with default blogs and faqs
 export const plumbers: Plumber[] = rawPlumbers.map((plumber) => {
   const typedPlumber = plumber as Plumber;
+  const projects = enrichProjects(typedPlumber);
+
   return {
     ...typedPlumber,
+    projects,
     blogs: typedPlumber.blogs?.length ? typedPlumber.blogs : buildDefaultBlogs(typedPlumber),
     faqs: typedPlumber.faqs?.length ? typedPlumber.faqs : buildDefaultFaqs(typedPlumber),
   };

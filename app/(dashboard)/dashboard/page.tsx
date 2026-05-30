@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { readStoredUser, type AppUser } from "@/components/utils/auth";
 import {
@@ -14,11 +14,7 @@ import {
 } from "react-icons/fa";
 
 export default function DashboardPage() {
-  const [user, setUser] = useState<AppUser | null>(null);
-
-  useEffect(() => {
-    setUser(readStoredUser());
-  }, []);
+  const [user] = useState<AppUser | null>(() => readStoredUser());
 
   const firstName = user?.name?.split(" ")[0] || "User";
 
@@ -76,7 +72,7 @@ export default function DashboardPage() {
       {/* Welcome Header */}
       <div className="rounded-2xl bg-gradient-to-r from-[#FFD60A] to-amber-400 p-8 text-gray-900 shadow-lg">
         <h1 className="text-4xl font-bold">Welcome back, {firstName}! 👋</h1>
-        <p className="mt-2 text-gray-700">You're all set. Here's your dashboard overview.</p>
+        <p className="mt-2 text-gray-700">overview.</p>
       </div>
 
       {/* Stats Grid */}

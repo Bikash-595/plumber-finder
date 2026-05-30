@@ -56,6 +56,24 @@ export default function AdminUsersPage() {
           </div>
         </div>
 
+        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">New users this week</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">28</p>
+            <p className="mt-2 text-xs text-slate-500">Recent signups and registration flow.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Active users</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">712</p>
+            <p className="mt-2 text-xs text-slate-500">Users currently engaging with the platform.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Top service types</p>
+            <p className="mt-3 text-base font-semibold text-slate-900">Plumbing, Leak repair, Drain cleaning</p>
+            <p className="mt-2 text-xs text-slate-500">Most requested services by users.</p>
+          </div>
+        </div>
+
         <table className="mt-6 w-full border-collapse text-left text-sm">
           <thead>
             <tr className="text-xs uppercase tracking-wide text-gray-500">

@@ -49,6 +49,24 @@ export default function AdminCompaniesPage() {
           />
         </div>
 
+        <div className="mt-6 grid gap-3 sm:grid-cols-3">
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Verified companies</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">138</p>
+            <p className="mt-2 text-xs text-slate-500">Confirmed businesses with valid documentation.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Pending reviews</p>
+            <p className="mt-3 text-3xl font-semibold text-slate-900">34</p>
+            <p className="mt-2 text-xs text-slate-500">Companies waiting for verification or proof checks.</p>
+          </div>
+          <div className="rounded-2xl bg-slate-50 p-4 text-sm text-gray-700 shadow-sm">
+            <p className="text-xs uppercase tracking-wider text-slate-500">Company blogs</p>
+            <p className="mt-3 text-base font-semibold text-slate-900">420 posts reviewed</p>
+            <p className="mt-2 text-xs text-slate-500">Track company content and topic quality.</p>
+          </div>
+        </div>
+
         <div className="mt-6 overflow-hidden rounded-2xl border border-gray-200">
           <table className="min-w-full border-collapse text-left text-sm">
             <thead className="bg-gray-50 text-xs uppercase tracking-wide text-gray-500">

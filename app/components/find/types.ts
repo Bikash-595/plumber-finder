@@ -94,15 +94,32 @@ export interface Plumber {
   branches?: { name: string; lat: number; lng: number; address: string }[];
   // ... existing fields ...
   projects: {
+    id?: string;
     title: string;
     client: string;
     description: string;
     image: string;
     year: number;
-    clientRating?: number;      // 1-5 stars
-    clientReview?: string;      // client testimonial
-    durationDays?: number;      // days to complete
-    projectCost?: number;       // total cost in USD
+    clientRating?: number;
+    clientReview?: string;
+    durationDays?: number;
+    projectCost?: number;
+    clientDetails?: {
+      name: string;
+      type: string;
+      location: string;
+      contactPerson: string;
+    };
+    projectDetails?: {
+      category: string;
+      scope: string;
+      challenge: string;
+      solution: string;
+      materials: string[];
+      teamSize: number;
+      warranty: string;
+      completedAt: string;
+    };
   }[];
   keyHighlights?: string[];
   distance?: number; 
