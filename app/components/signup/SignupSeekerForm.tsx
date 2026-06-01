@@ -51,16 +51,11 @@ export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFor
     }
     setPasswordError("");
 
-    const fullPhone = `${phoneCountryCode} ${phoneNumber}`;
-    console.log("Seeker signup", {
-      fullName,
-      email,
-      phone: fullPhone,
-      password,
-      address,
-      agreeTerms,
-      agreeSms,
-    });
+    if (!fullName.trim() || !email.trim() || !phoneNumber.trim() || !address.trim() || !agreeTerms) {
+      setPasswordError("Please complete all required fields");
+      return;
+    }
+
     onComplete?.(fullName, email);
     alert("Account created! You can now find plumbers near you.");
   };

@@ -52,17 +52,11 @@ export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyF
     }
     setPasswordError("");
 
-    const fullPhone = `${phoneCountryCode} ${phoneNumber}`;
-    console.log("Company signup", {
-      companyName,
-      email,
-      phone: fullPhone,
-      password,
-      licenseNumber,
-      serviceAreas,
-      website,
-      agreeTerms,
-    });
+    if (!companyName.trim() || !email.trim() || !phoneNumber.trim() || !licenseNumber.trim() || !serviceAreas.trim() || !agreeTerms) {
+      setPasswordError("Please complete all required fields");
+      return;
+    }
+
     onComplete?.(companyName, email);
     alert("Company registration submitted for review. You'll be notified once approved.");
   };

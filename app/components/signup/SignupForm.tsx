@@ -19,7 +19,9 @@ export default function SignupForm({ accountType }: SignupFormProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Signup attempt", { accountType, name, email, phone, password, agreeTerms, agreeSms });
+    if (!name.trim() || !email.trim() || !phone.trim() || password.length < 6 || !agreeTerms) {
+      return;
+    }
     alert(`Account created as ${accountType === "seeker" ? "a customer" : "a plumbing company"}`);
   };
 

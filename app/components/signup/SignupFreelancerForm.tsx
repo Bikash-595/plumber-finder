@@ -52,14 +52,6 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
     }
 
     setPasswordError("");
-    console.log("Freelancer signup", {
-      fullName,
-      email,
-      phone: `${phoneCountryCode} ${phoneNumber}`,
-      serviceAreas,
-      skills,
-      hourlyRate,
-    });
     onComplete?.(fullName, email);
     alert("Freelancer account created! You can now manage your profile and leads.");
   };
