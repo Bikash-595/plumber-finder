@@ -10,7 +10,10 @@ export default function ResultsHeader({ totalResults, viewMode, onViewModeChange
   return (
     <div className="flex items-center justify-between mb-6">
       <p className="text-gray-600">
-        <span className="font-semibold text-gray-900">{totalResults}</span> plumbers found
+
+        {/* <span className="font-semibold text-gray-900">{totalResults}</span> */}
+         {/* plumbers found */}
+
       </p>
       <div className="flex gap-2">
         <button

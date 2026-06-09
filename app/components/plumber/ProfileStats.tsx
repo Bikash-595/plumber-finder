@@ -190,16 +190,16 @@
 import { Plumber } from "@/components/find/types";
 import {
   FaBriefcase,
-  FaClock,
+  // FaClock,
   FaShieldAlt,
   FaMapMarkerAlt,
   FaUsers,
   FaCalendarAlt,
   FaMoneyBillWave,
-  FaHandshake,
+  // FaHandshake,
   FaCertificate,
-  FaLanguage,
-  FaCreditCard,
+  // FaLanguage,
+  // FaCreditCard,
   FaProjectDiagram,
 } from "react-icons/fa";
 
@@ -208,14 +208,14 @@ export default function ProfileStats({ plumber }: { plumber: Plumber }) {
     { icon: FaCalendarAlt, label: "Founded", value: plumber.established },
     { icon: FaBriefcase, label: "Experience", value: `${plumber.yearsInBusiness}+ years` },
     { icon: FaUsers, label: "Team Size", value: `${plumber.teamSize} plumbers` },
-    { icon: FaClock, label: "Response Time", value: plumber.responseTime },
+    // { icon: FaClock, label: "Response Time", value: plumber.responseTime },
     { icon: FaShieldAlt, label: "License #", value: plumber.licenseNumber || "—" },
     { icon: FaMapMarkerAlt, label: "Service Areas", value: `${plumber.serviceAreas.length} cities` },
     { icon: FaMoneyBillWave, label: "Avg. Cost", value: `$${plumber.averageCost}` },
-    { icon: FaHandshake, label: "Warranty", value: plumber.warranty },
+    // { icon: FaHandshake, label: "Warranty", value: plumber.warranty },
     { icon: FaCertificate, label: "Certifications", value: plumber.certifications.length },
-    { icon: FaLanguage, label: "Languages", value: plumber.languages.length },
-    { icon: FaCreditCard, label: "Payment Methods", value: plumber.paymentMethods.length },
+    // { icon: FaLanguage, label: "Languages", value: plumber.languages.length },
+    // { icon: FaCreditCard, label: "Payment Methods", value: plumber.paymentMethods.length },
     { icon: FaProjectDiagram, label: "Projects Done", value: plumber.projects?.length || 0 },
   ];
 

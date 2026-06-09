@@ -286,6 +286,10 @@ import {
   FaGlobe,
   FaUsers,
   FaUserTie,
+  FaFacebook,
+  FaTwitter,
+  FaInstagram,
+  FaLinkedin,
 } from "react-icons/fa";
 
 export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
@@ -375,18 +379,52 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             
             <a
               href={`tel:${plumber.phone}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
+              // className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-gray-700 hover:bg-gray-100 transition"
             >
-              <FaPhone className="text-gray-500" />
+              <FaPhone className="text-gray-900" />
               Call
+            
             </a>
 
             <a
               href={`mailto:${plumber.email}`}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
+            //  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition"
             >
-              <FaEnvelope className="text-gray-500" />
+              <FaEnvelope className="text-gray-900" />
               Email
+            </a>
+
+
+              <a
+              href={`mailto:${plumber.email}`}
+            //  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition"
+            >
+              <FaTwitter className="text-gray-900" />
+              X.com
+            </a>
+
+              <a
+              href={`mailto:${plumber.email}`}
+            //  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition"
+            >
+              <FaInstagram className="text-gray-900" />
+              Instagram
+            </a>
+
+              <a
+              href={`mailto:${plumber.email}`}
+            //  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition"
+            >
+              <FaFacebook className="text-gray-900" />
+              Facebook
+            </a>
+              <a
+              href={`mailto:${plumber.email}`}
+
+            //  className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition"
+            >
+              <FaLinkedin className="text-gray-900" />
+              LinkedIn
             </a>
 
             {plumber.website && (
@@ -394,9 +432,9 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                 href={plumber.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 transition"
+                // className="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-300 !text-black hover:bg-gray-100 transition c"
               >
-                <FaGlobe className="text-gray-500" />
+                <FaGlobe className="text-gray-900" />
                 Website
               </a>
             )}

@@ -7,7 +7,7 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { plumbers } from "@/data/plumbers";
-import CompanySectionPage from "../CompanySectionPage";
+import CompanySectionPage from "./addcompany/CompanySectionPage";
 
 const content = {
   title: "Company List",

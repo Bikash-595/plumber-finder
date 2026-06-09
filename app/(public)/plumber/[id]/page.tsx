@@ -181,7 +181,7 @@ import { plumbers } from "@/data/plumbers";
 import ProfileHeader from "@/components/plumber/ProfileHeader";
 import ProfileStats from "@/components/plumber/ProfileStats";
 import ProfileServices from "@/components/plumber/ProfileServices";
-import ProfileAdditionalInfo from "@/components/plumber/ProfileAdditionalInfo";
+// import ProfileAdditionalInfo from "@/components/plumber/ProfileAdditionalInfo";
 import ProfileReviews from "@/components/plumber/ProfileReviews";
 import ProfileMap from "@/components/plumber/ProfileMap";
 import BookingWidget from "@/components/plumber/BookingWidget";
@@ -231,19 +231,27 @@ export default function PlumberProfilePage({ params }: { params: Promise<{ id: s
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             <ProfileHeader plumber={plumber} />
+            <ProfileStats plumber={plumber} />
+            <ProfileServices plumber={plumber} />
+
+
             {plumber.media && (plumber.media.images.length > 0 || plumber.media.videos.length > 0) && (
               <MediaGallery images={plumber.media.images} videos={plumber.media.videos} />
             )}
-            <ProfileStats plumber={plumber} />
-            <ProfileServices plumber={plumber} />
-            <ProfileAdditionalInfo plumber={plumber} />
+          
+            {/* <ProfileAdditionalInfo plumber={plumber} /> */}
+
             {plumber.projects && plumber.projects.length > 0 && <ProfilePreviousProjects plumber={plumber} />}
-            <ProfileBlogSection plumber={plumber} />
             <ProfileFaq plumber={plumber} />
             <ProfileReviews />
             <ProfileMap plumber={plumber} />
+
+            <ProfileBlogSection plumber={plumber} />
+            
+            
+            
           </div>
-          <div className="lg:col-span-1">
+          <div className="lg:col-span-1 space-y-6">
             <DiscountCard plumber={plumber} />
              <BookingWidget plumber={plumber} />
           </div>

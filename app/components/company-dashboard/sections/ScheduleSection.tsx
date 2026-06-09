@@ -1,4 +1,4 @@
-import CompanySectionPage, { CompanySectionTable } from "../CompanySectionPage";
+import CompanySectionPage, { CompanySectionTable } from "./addcompany/CompanySectionPage";
 
 const content = {
   title: "Schedule",

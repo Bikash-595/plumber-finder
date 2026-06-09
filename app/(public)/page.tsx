@@ -131,7 +131,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-white font-sans">
       {/* Hero Search Section */}
-      <section
+      {/* <section
         className="relative isolate overflow-hidden bg-[radial-gradient(circle_at_top_left,#123260,transparent_45%),radial-gradient(circle_at_top_right,#0f2a4d,transparent_40%),radial-gradient(circle_at_bottom_left,#0f2a4d,transparent_35%)]"
         style={{
           backgroundImage:
@@ -210,7 +210,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Results Section */}
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
