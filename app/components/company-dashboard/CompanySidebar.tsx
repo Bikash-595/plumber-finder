@@ -111,6 +111,7 @@ export default function CompanySidebar({
             );
           })}
         </nav>
+
         <button
           type="button"
           onClick={handleLogout}
@@ -123,6 +124,7 @@ export default function CompanySidebar({
       </aside>
     );
   }
+  
 
   return (
     <aside className="flex h-full w-72 flex-shrink-0 flex-col overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] text-white shadow-xl">
@@ -250,6 +252,11 @@ export default function CompanySidebar({
         </div>
       </nav>
 
+
+
+
+
+
       <div className="border-t border-white/10 bg-black/10 p-3">
         <button
           type="button"
@@ -264,6 +271,10 @@ export default function CompanySidebar({
           </div>
         </button>
       </div>
+
+
+
+
     </aside>
   );
 }

@@ -7,22 +7,6 @@ import {
   FaShieldAlt,
 } from "react-icons/fa";
 import { plumbers } from "@/data/plumbers";
-import CompanySectionPage from "./addcompany/CompanySectionPage";
-
-const content = {
-  title: "Company List",
-  description: "Review all listed plumber companies, verification status, coverage, response speed, and profile quality.",
-  stats: [
-    { label: "Listed companies", value: "64", detail: "Across active service areas" },
-    { label: "Verified partners", value: "52", detail: "License and insurance checked" },
-    { label: "Emergency ready", value: "31", detail: "Advertise rapid response" },
-  ],
-  tasks: [
-    { title: "Review new company submission", status: "Today", detail: "Check license, insurance, service photos, and coverage." },
-    { title: "Audit low profile health listings", status: "Open", detail: "12 companies need photos, pricing, or service updates." },
-    { title: "Promote top local partners", status: "Ready", detail: "Feature verified companies on city and state result pages." },
-  ],
-};
 
 function CompanyList() {
   const listedCompanies = plumbers.slice(0, 10);
@@ -116,8 +100,8 @@ function CompanyList() {
 
 export default function CompanyListSection() {
   return (
-    <CompanySectionPage content={content}>
+
       <CompanyList />
-    </CompanySectionPage>
+   
   );
 }

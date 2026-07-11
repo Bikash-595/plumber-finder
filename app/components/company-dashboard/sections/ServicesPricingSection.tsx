@@ -29,8 +29,8 @@ const table = {
 
 export default function ServicesPricingSection() {
   return (
-    <CompanySectionPage content={content}>
+
       <CompanySectionTable table={table} />
-    </CompanySectionPage>
+
   );
 }

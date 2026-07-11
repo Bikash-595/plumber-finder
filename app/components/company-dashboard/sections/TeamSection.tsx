@@ -29,8 +29,8 @@ const table = {
 
 export default function TeamSection() {
   return (
-    <CompanySectionPage content={content}>
+
       <CompanySectionTable table={table} />
-    </CompanySectionPage>
+  
   );
 }

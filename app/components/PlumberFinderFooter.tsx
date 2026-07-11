@@ -181,7 +181,7 @@ export default function PlumberFinderFooter() {
   return (
     <footer className="border-t border-gray-200 bg-white text-gray-800">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-around">
           {/* Logo & CTA */}
           <div className="max-w-sm text-center sm:text-left lg:max-w-xs">
             <Link href="/" className="inline-flex flex-col items-center gap-2 text-[#FFD60A] sm:flex-row sm:items-center">
@@ -199,7 +199,7 @@ export default function PlumberFinderFooter() {
             <p className="mt-3 text-sm leading-relaxed text-gray-600">
               Find trusted local plumbers, compare verified reviews, and book confidently.
             </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-start">
+            <div className="mt-4 flex flex-wrap justify-center gap-2 sm:justify-center">
               <Link
                 href="/find"
                 className="rounded-full bg-[#FFD60A] px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:brightness-105"
@@ -216,7 +216,7 @@ export default function PlumberFinderFooter() {
           </div>
 
           {/* Three columns: Navigation, Services, States */}
-          <div className="grid grid-cols-3 gap-4 text-center text-xs sm:text-sm">
+          <div className="grid grid-cols-3 gap-20 text-left text-xs sm:text-sm">
             {/* Navigation Column */}
             <div>
               <h3 className="mb-3 font-bold uppercase tracking-wide text-gray-800">Navigation</h3>
@@ -281,7 +281,7 @@ export default function PlumberFinderFooter() {
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-200">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-4 text-xs text-gray-500 sm:flex-row sm:items-center sm:justify-around sm:px-6 lg:px-8">
           <span className="text-center sm:text-left">© 2026 Plumber Finder. All rights reserved.</span>
           <div className="flex flex-wrap items-center justify-center gap-3 sm:justify-end">
             <span>Trusted pros</span>

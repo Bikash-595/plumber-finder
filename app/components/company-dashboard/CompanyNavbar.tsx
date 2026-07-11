@@ -20,13 +20,13 @@ import {
   type AppUser,
 } from "@/components/utils/auth";
 
-const quickLinks = [
-  { label: "Add Company", href: "/company-dashboard/add-company" },
-  { label: "Leads", href: "/company-dashboard/leads" },
-  { label: "Jobs", href: "/company-dashboard/jobs" },
-  { label: "Companies", href: "/company-dashboard/company-list" },
-  { label: "Schedule", href: "/company-dashboard/schedule" },
-];
+// const quickLinks = [
+//   { label: "Add Company", href: "/company-dashboard/add-company" },
+//   { label: "Leads", href: "/company-dashboard/leads" },
+//   { label: "Jobs", href: "/company-dashboard/jobs" },
+//   { label: "Companies", href: "/company-dashboard/company-list" },
+//   { label: "Schedule", href: "/company-dashboard/schedule" },
+// ];
 
 interface CompanyNavbarProps {
   onToggleSidebar: () => void;
@@ -92,7 +92,7 @@ export default function CompanyNavbar({ onToggleSidebar }: CompanyNavbarProps) {
             className="ml-3 w-full bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400"
           />
         </div>
-
+{/* 
         <nav className="hidden items-center gap-1 md:flex" aria-label="Company dashboard quick links">
           {quickLinks.map((link) => {
             const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -107,9 +107,9 @@ export default function CompanyNavbar({ onToggleSidebar }: CompanyNavbarProps) {
               </Link>
             );
           })}
-        </nav>
+        </nav> */}
 
-        <div className="md:hidden w-full border-t border-gray-100 bg-white/95 px-3 py-2">
+        {/* <div className="md:hidden w-full border-t border-gray-100 bg-white/95 px-3 py-2">
           <div className="-mx-1 flex w-full gap-2 overflow-x-auto px-1">
             {quickLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -125,7 +125,7 @@ export default function CompanyNavbar({ onToggleSidebar }: CompanyNavbarProps) {
               );
             })}
           </div>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-2">
           <Link

@@ -56,6 +56,8 @@ export const companyNavSections: { label: string; items: CompanyNavItem[] }[] = 
       { label: "Services & Pricing", href: "/company-dashboard/services", icon: FaFileInvoiceDollar },
       { label: "Reviews", href: "/company-dashboard/reviews", icon: FaStar },
       { label: "Team", href: "/company-dashboard/team", icon: FaUserCog },
+       { label: " Add Team ", href: "/company-dashboard/Add-team", icon: FaUserCog },
+
     ],
   },
   {
