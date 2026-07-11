@@ -462,6 +462,33 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 "use client";
 
 import Image from "next/image";
@@ -482,8 +509,13 @@ import {
   FaLinkedin,
 } from "react-icons/fa";
 
+
+
+
 export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
   const socialLinks = plumber.socialLinks || {};
+
+
 
   return (
     <div className="rounded-2xl bg-white p-5 shadow-sm border border-gray-200 transition hover:shadow-md sm:p-6">
@@ -506,55 +538,87 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
           {/* Name and badges */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
             <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
+
               {plumber.companyName}
+
             </h1>
+
+
             {plumber.isVerified && (
               <FaCheckCircle className="h-5 w-5 text-[#FFD60A]" />
             )}
+
+
+
             {plumber.isEmergency && (
               <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-600">
                 🚨 24/7
               </span>
+
+
             )}
           </div>
+
 
           {/* Rating & Location */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-gray-600 sm:justify-start">
             <div className="flex items-center gap-1">
               <FaStar className="h-4 w-4 text-[#FFD60A]" />
               <span className="font-semibold text-gray-800">{plumber.rating}</span>
+
+
               <span className="text-gray-500">({plumber.reviewCount} reviews)</span>
+
+
             </div>
             <span className="hidden text-gray-300 sm:inline">•</span>
             <div className="flex items-center gap-1">
               <FaMapMarkerAlt className="h-3.5 w-3.5 text-gray-500" />
+
+
               <span className="text-gray-600">{plumber.location}</span>
+
+
             </div>
           </div>
+
 
           {/* Description */}
           <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
             {plumber.description}
           </p>
 
+
+
           {/* Owner & Team */}
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600 sm:justify-start">
             <div className="flex items-center gap-1.5">
               <FaUserTie className="h-4 w-4 text-gray-500" />
+
+
               <span>
                 Owner: <span className="font-medium text-gray-800">{plumber.ownerName}</span>
               </span>
+
+
             </div>
             <div className="flex items-center gap-1.5">
               <FaUsers className="h-4 w-4 text-gray-500" />
+
+
               <span>
                 <span className="font-medium text-gray-800">{plumber.teamSize}</span> plumbers
               </span>
+
+
             </div>
           </div>
 
           {/* Action Buttons (Contact & Social) */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2 sm:justify-start">
+
+
+
             {/* Phone */}
             <a
               href={`tel:${plumber.phone}`}
@@ -565,6 +629,10 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
               {/* <span className="hidden sm:inline">Call</span> */}
             </a>
 
+
+
+
+
             {/* Email */}
             <a
               href={`mailto:${plumber.email}`}
@@ -574,6 +642,9 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
               <FaEnvelope className="h-3.5 w-3.5" />
               {/* <span className="hidden sm:inline">Email</span> */}
             </a>
+
+
+
 
             {/* Website */}
             {plumber.website && (
@@ -587,9 +658,14 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                 <FaGlobe className="h-3.5 w-3.5" />
                 {/* <span className="hidden sm:inline">Website</span> */}
               </a>
+
+
+
             )}
 
+
             {/* Social Icons (only if links exist) */}
+
             <div className="flex items-center gap-1">
               {socialLinks.facebook && (
                 <a
@@ -602,6 +678,8 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   <FaFacebook className="h-4 w-4" />
                 </a>
               )}
+
+              
               {socialLinks.twitter && (
                 <a
                   href={socialLinks.twitter}
@@ -610,9 +688,24 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
                   title="X (Twitter)"
                 >
-                  <FaTwitter className="h-4 w-4" />
+                   <Image
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                      alt="Instagram"
+                      width={24}
+                      height={24}
+                     className="object-contain"
+                  />
+                  
+                  {/* <FaTwitter className="h-4 w-4" /> */}
                 </a>
               )}
+
+
+
+
+
+
+              
               {socialLinks.instagram && (
                 <a
                   href={socialLinks.instagram}
@@ -621,12 +714,14 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-gray=]00 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
                   // title="Instagram"
                 >
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy2E__9urvFrUlEflkbL7bntH0oEy1l_gUIA&s"
-                    alt="Instagram"
-                    className="h-5 w-10"
+                  <Image
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                      alt="Instagram"
+                      width={24}
+                      height={24}
+                     className="object-contain"
                   />
-                  <FaInstagram className="h-4 w-4" />
+                  {/* <FaInstagram className="h-4 w-4" /> */}
                 </a>
               )}
               {socialLinks.linkedin && (
@@ -637,7 +732,14 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
                   title="LinkedIn"
                 >
-                  <FaLinkedin className="h-4 w-4" />
+                    <Image
+                      src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+                      alt="Instagram"
+                      width={24}
+                      height={24}
+                     className="object-contain"
+                  />
+                  {/* <FaLinkedin className="h-4 w-4" /> */}
                 </a>
               )}
             </div>
@@ -646,4 +748,6 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
       </div>
     </div>
   );
+
+
 }

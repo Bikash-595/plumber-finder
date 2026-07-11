@@ -1,11 +1,18 @@
+
 "use client";
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type MouseEvent, useState } from "react";
-import { FaCheckCircle, FaChevronRight, FaSignOutAlt, FaTools } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaChevronRight,
+  FaSignOutAlt,
+  FaTools,
+} from "react-icons/fa";
 import { TbSquareToggle } from "react-icons/tb";
 import { clearStoredUser } from "@/components/utils/auth";
+
 import {
   companyNavSections,
   type CompanySidebarState,
@@ -23,8 +30,17 @@ function isRouteActive(pathname: string, href: string) {
 }
 
 function isModifiedClick(event: MouseEvent<HTMLAnchorElement>) {
-  return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
+  return (
+    event.metaKey ||
+    event.ctrlKey ||
+    event.shiftKey ||
+    event.altKey ||
+    event.button !== 0
+  );
 }
+
+const focusRing =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4C9AFF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B1F33]";
 
 export default function CompanySidebar({
   sidebarState = "open",
@@ -33,17 +49,24 @@ export default function CompanySidebar({
 }: CompanySidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [openSections, setOpenSections] = useState<string[]>([]);
+
   const activeSection =
     companyNavSections.find((section) =>
-      section.items.some((item) => isRouteActive(pathname, item.href))
-    )?.label || companyNavSections[0].label;
+      section.items.some((item) => isRouteActive(pathname, item.href)),
+    )?.label ?? companyNavSections[0]?.label;
 
-  const toggleSection = (sectionLabel: string) => {
+  const [openSections, setOpenSections] = useState<string[]>([]);
+
+  const isSectionOpen = (label: string) =>
+    label === activeSection || openSections.includes(label);
+
+  const toggleSection = (label: string) => {
+    if (label === activeSection) return;
+
     setOpenSections((current) =>
-      current.includes(sectionLabel)
-        ? current.filter((label) => label !== sectionLabel)
-        : [...current, sectionLabel]
+      current.includes(label)
+        ? current.filter((item) => item !== label)
+        : [...current, label],
     );
   };
 
@@ -53,8 +76,12 @@ export default function CompanySidebar({
     onLinkClick?.();
   };
 
-  const handleNavClick = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+  const handleNavClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
     if (isModifiedClick(event)) return;
+
     event.preventDefault();
     router.push(href);
     onLinkClick?.();
@@ -62,51 +89,65 @@ export default function CompanySidebar({
 
   if (sidebarState === "closed") {
     return (
-      <aside className="contents">
-        <button
-          type="button"
-          onClick={onToggle}
-          className="fixed left-4 top-4 z-50 flex h-11 w-11 items-center justify-center rounded-lg bg-transparent text-black transition hover:text-[#0b1f3b]"
-          aria-label="Open company sidebar"
-        >
-          <TbSquareToggle className="h-6 w-6" />
-        </button>
-      </aside>
+      <button
+        type="button"
+        onClick={onToggle}
+        className="fixed left-4 top-4 z-50 grid h-11 w-11 place-items-center rounded-xl border border-slate-200 bg-white text-[#102A43] shadow-sm transition hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4C9AFF]"
+        aria-label="Open company navigation"
+      >
+        <TbSquareToggle className="h-5 w-5" aria-hidden="true" />
+      </button>
     );
   }
 
   if (sidebarState === "icons") {
-    const iconItems = companyNavSections.flatMap((section) => section.items);
+    const iconItems = companyNavSections.flatMap(
+      (section) => section.items,
+    );
 
     return (
-      <aside className="flex h-full w-20 flex-shrink-0 flex-col items-center overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] py-4 text-white shadow-xl">
+      <aside className="flex h-full w-[72px] shrink-0 flex-col items-center border-r border-white/10 bg-[#0B1F33] px-3 py-4 text-white">
         <button
-          type="button"
+          type="button"   
           onClick={onToggle}
-          className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 bg-[#FFD60A] text-[#0b1f3b] transition hover:bg-white"
-          aria-label="Open company sidebar"
+          className={`mb-5 grid h-11 w-11 place-items-center rounded-xl bg-white/[0.08] text-white transition hover:bg-white/[0.14] ${focusRing}`}
+          aria-label="Expand company navigation"
         >
-          <TbSquareToggle className="h-5 w-5" />
+          <TbSquareToggle className="h-5 w-5" aria-hidden="true" />
         </button>
-        <nav className="flex min-h-0 flex-1 flex-col items-center gap-2 overflow-y-auto px-2">
+
+        <nav
+          className="flex min-h-0 flex-1 flex-col items-center gap-1.5 overflow-y-auto"
+          aria-label="Company navigation"
+        >
           {iconItems.map((item) => {
             const Icon = item.icon;
-            const isActive = isRouteActive(pathname, item.href);
+            const active = isRouteActive(pathname, item.href);
 
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                onClick={(event) => handleNavClick(event, item.href)}
-                className={`flex h-10 w-10 items-center justify-center rounded-lg transition ${
-                  isActive
-                    ? "bg-[#FFD60A] text-[#0b1f3b]"
-                    : "bg-white/[0.06] text-white/70 hover:bg-white/[0.12] hover:text-white"
+                onClick={(event) =>
+                  handleNavClick(event, item.href)
+                }
+                className={`relative grid h-11 w-11 place-items-center rounded-xl transition ${focusRing} ${
+                  active
+                    ? "bg-[#244969] text-white"
+                    : "text-white/65 hover:bg-white/[0.08] hover:text-white"
                 }`}
                 aria-label={item.label}
+                aria-current={active ? "page" : undefined}
                 title={item.label}
               >
-                <Icon className="h-4 w-4" />
+                {active && (
+                  <span className="absolute -left-3 h-6 w-1 rounded-r-full bg-[#F4C542]" />
+                )}
+
+                <Icon
+                  className="h-[18px] w-[18px]"
+                  aria-hidden="true"
+                />
               </Link>
             );
           })}
@@ -115,166 +156,197 @@ export default function CompanySidebar({
         <button
           type="button"
           onClick={handleLogout}
-          className="mt-4 flex h-10 w-10 items-center justify-center rounded-lg bg-red-500/10 text-red-200 transition hover:bg-red-500/20 hover:text-white"
-          aria-label="Logout"
-          title="Logout"
+          className={`mt-4 grid h-11 w-11 place-items-center rounded-xl text-white/55 transition hover:bg-red-400/10 hover:text-red-200 ${focusRing}`}
+          aria-label="Log out"
+          title="Log out"
         >
-          <FaSignOutAlt className="h-4 w-4" />
+          <FaSignOutAlt
+            className="h-[18px] w-[18px]"
+            aria-hidden="true"
+          />
         </button>
       </aside>
     );
   }
-  
 
   return (
-    <aside className="flex h-full w-72 flex-shrink-0 flex-col overflow-hidden border-r border-slate-900/10 bg-[#0b1f3b] text-white shadow-xl">
-      <div className="border-b border-white/10 px-5 py-5">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/company-dashboard"
-            onClick={(event) => handleNavClick(event, "/company-dashboard")}
-            className="flex min-w-0 flex-1 items-center gap-3"
-          >
-            <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-[#FFD60A] text-[#0b1f3b] shadow-sm">
-              <FaTools className="h-5 w-5" />
-            </span>
-            <span className="min-w-0">
-              <span className="block truncate text-base font-bold tracking-wide !text-white">
-                Plumber Finder
-              </span>
-              <span className="block truncate text-xs font-medium !text-white/60">
-                Company Dashboard
-              </span>
-            </span>
-          </Link>
-          {onToggle && (
-            <button
-              type="button"
-              onClick={onToggle}
-              className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg border border-white/10 bg-white/[0.08] text-white transition hover:border-[#FFD60A] hover:bg-[#FFD60A] hover:text-[#0b1f3b]"
-              aria-label="Collapse company sidebar"
-            >
-              <TbSquareToggle className="h-5 w-5" />
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="mx-4 mt-4 rounded-lg border border-white/10 bg-white/[0.06] p-4 shadow-sm">
-        <div className="flex items-start gap-3">
-          <span className="mt-0.5 flex h-8 w-8 items-center justify-center rounded-md bg-emerald-400/15 text-emerald-300">
-            <FaCheckCircle className="h-4 w-4" />
+    <aside className="flex h-full w-72 shrink-0 flex-col overflow-hidden border-r border-white/10 bg-[#0B1F33] text-white shadow-[8px_0_28px_rgba(7,26,45,0.08)]">
+      <header className="flex h-[76px] items-center gap-3 border-b border-white/[0.08] px-5">
+        <Link
+          href="/company-dashboard"
+          onClick={(event) =>
+            handleNavClick(event, "/company-dashboard")
+          }
+          className={`flex min-w-0 flex-1 items-center gap-3 rounded-lg ${focusRing}`}
+          aria-label="Plumber Finder dashboard"
+        >
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[#F4C542] text-[#0B1F33] shadow-sm">
+            <FaTools
+              className="h-[18px] w-[18px]"
+              aria-hidden="true"
+            />
           </span>
-          <div className="min-w-0">
-            <p className="text-sm font-semibold !text-white">Business ready</p>
-            <p className="mt-1 text-xs leading-5 !text-white/60">
-              Leads, jobs, team, reviews, services, billing, and settings in one place.
-            </p>
+
+          <span className="min-w-0">
+            <span className="block truncate text-[15px] font-bold tracking-[-0.01em] text-white">
+              Plumber Finder
+            </span>
+
+            <span className="mt-0.5 block truncate text-[11px] font-medium tracking-wide text-white/50">
+              BUSINESS PORTAL
+            </span>
+          </span>
+        </Link>
+
+        {onToggle && (
+          <button
+            type="button"
+            onClick={onToggle}
+            className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg text-white/55 transition hover:bg-white/[0.08] hover:text-white ${focusRing}`}
+            aria-label="Collapse company navigation"
+          >
+            <TbSquareToggle
+              className="h-5 w-5"
+              aria-hidden="true"
+            />
+          </button>
+        )}
+      </header>
+
+      <div className="px-4 pb-2 pt-4">
+        <div className="rounded-xl border border-white/10 bg-white/[0.055] p-3.5">
+          <div className="flex items-center gap-3">
+         
+
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-sm font-semibold text-white">
+                Manage your business 
+              </p>
+
+              <p className="mt-0.5 truncate text-xs text-white/50">
+                Get leads, sales, and profits.
+              </p>
+            </div>
+
+         
           </div>
         </div>
       </div>
 
-      <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-5">
-        <div className="space-y-2">
+      <nav
+        className="min-h-0 flex-1 overflow-y-auto px-3 py-3 [scrollbar-color:rgba(255,255,255,.16)_transparent] [scrollbar-width:thin]"
+        aria-label="Company navigation"
+      >
+        <div className="space-y-5">
           {companyNavSections.map((section) => {
-            const isOpen = section.label === activeSection || openSections.includes(section.label);
+            const open = isSectionOpen(section.label);
+
+            const regionId = `company-nav-${section.label
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")}`;
 
             return (
-              <div key={section.label}>
+              <section
+                key={section.label}
+                aria-labelledby={`${regionId}-label`}
+              >
                 <button
+                  id={`${regionId}-label`}
                   type="button"
                   onClick={() => toggleSection(section.label)}
-                  className={`mb-1 flex min-h-9 w-full items-center justify-between rounded-lg px-3 text-left text-[11px] font-bold uppercase tracking-wider transition ${
-                    isOpen
-                      ? "bg-white/10 !text-white"
-                      : "text-white/80 hover:bg-white/[0.06] hover:text-white"
-                  }`}
+                  className={`flex h-8 w-full items-center justify-between rounded-lg px-3 text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 transition hover:bg-white/[0.05] hover:text-white/70 ${focusRing}`}
+                  aria-expanded={open}
+                  aria-controls={regionId}
                 >
                   <span>{section.label}</span>
-                  <FaChevronRight
-                    className={`h-3 w-3 transition-transform ${
-                      isOpen ? "rotate-90 !text-[#FFD60A]" : "!text-white/40"
+
+                  <FaChevronDown
+                    className={`h-2.5 w-2.5 transition-transform duration-200 ${
+                      open ? "rotate-0" : "-rotate-90"
                     }`}
+                    aria-hidden="true"
                   />
                 </button>
 
-                {isOpen && (
-                  <div className="space-y-1 pb-2">
+                {open && (
+                  <div id={regionId} className="mt-1 space-y-1">
                     {section.items.map((item) => {
                       const Icon = item.icon;
-                      const isActive = isRouteActive(pathname, item.href);
+                      const active = isRouteActive(
+                        pathname,
+                        item.href,
+                      );
 
                       return (
                         <Link
                           key={item.href}
                           href={item.href}
-                          onClick={(event) => handleNavClick(event, item.href)}
-                          className={`group relative flex min-h-11 items-center justify-between rounded-lg px-3 py-2.5 pl-4 text-sm font-semibold transition-all duration-200 ${
-                            isActive
-                              ? "bg-[#FFD60A] !text-[#0b1f3b] shadow-md shadow-black/10"
-                              : "!text-white/75 hover:bg-white/[0.08] hover:!text-white"
+                          onClick={(event) =>
+                            handleNavClick(event, item.href)
+                          }
+                          className={`group relative flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm font-medium transition duration-150 ${focusRing} ${
+                            active
+                              ? "bg-[#244969] text-white shadow-[0_1px_2px_rgba(0,0,0,0.12)]"
+                              : "text-white/65 hover:bg-white/[0.07] hover:text-white"
                           }`}
+                          aria-current={
+                            active ? "page" : undefined
+                          }
                         >
-                          {isActive && (
-                            <span className="absolute bottom-2 left-1 top-2 w-1 rounded-full bg-[#0b1f3b]" />
+                          {active && (
+                            <span className="absolute -left-0.5 h-6 w-1 rounded-full bg-[#F4C542]" />
                           )}
-                          <div className="flex min-w-0 items-center gap-3">
-                            <span
-                              className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md transition ${
-                                isActive ? "bg-[#0b1f3b]/10" : "bg-white/5 group-hover:bg-white/[0.08]"
-                              }`}
-                            >
-                              <Icon
-                                className={`h-4 w-4 ${
-                                  isActive ? "!text-[#0b1f3b]" : "!text-white group-hover:!text-white"
-                                }`}
-                              />
-                            </span>
-                            <span
-                              className={`truncate ${
-                                isActive ? "!text-[#0b1f3b]" : "!text-white group-hover:!text-white"
-                              }`}
-                            >
-                              {item.label}
-                            </span>
-                          </div>
-                          {isActive && (
-                            <FaChevronRight className="h-3.5 w-3.5 flex-shrink-0 !text-[#0b1f3b]" />
+
+                          <span
+                            className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg transition ${
+                              active
+                                ? "bg-white/[0.08] text-white"
+                                : "text-white/55 group-hover:text-white"
+                            }`}
+                          >
+                            <Icon
+                              className="h-4 w-4"
+                              aria-hidden="true"
+                            />
+                          </span>
+
+                          <span className="min-w-0 flex-1 truncate">
+                            {item.label}
+                          </span>
+
+                          {active && (
+                            <FaChevronRight
+                              className="h-3 w-3 shrink-0 text-white/55"
+                              aria-hidden="true"
+                            />
                           )}
                         </Link>
                       );
                     })}
                   </div>
                 )}
-              </div>
+              </section>
             );
           })}
         </div>
       </nav>
 
-
-
-
-
-
-      <div className="border-t border-white/10 bg-black/10 p-3">
+      <footer className="border-t border-white/[0.08] bg-[#071A2D] p-3">
         <button
           type="button"
           onClick={handleLogout}
-          className="flex min-h-11 w-full items-center justify-between rounded-lg px-3 py-2.5 text-sm font-semibold !text-red-200 transition-all duration-200 hover:bg-red-500/15 hover:!text-white"
+          className={`group flex min-h-11 w-full items-center gap-3 rounded-xl px-3 text-sm font-medium text-white/55 transition hover:bg-red-400/10 hover:text-red-200 ${focusRing}`}
         >
-          <div className="flex items-center gap-3">
-            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-red-500/10">
-              <FaSignOutAlt className="h-4 w-4" />
-            </span>
-            <span>Logout</span>
-          </div>
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-white/[0.04] transition group-hover:bg-red-400/10">
+            <FaSignOutAlt
+              className="h-4 w-4"
+              aria-hidden="true"
+            />
+          </span>
+
+          <span>Log out</span>
         </button>
-      </div>
-
-
-
-
+      </footer>
     </aside>
   );
 }

@@ -10,12 +10,13 @@ import {
   FaCreditCard,
   FaFileInvoiceDollar,
   FaHome,
-  FaMapMarkedAlt,
-  FaPlusCircle,
+  // FaMapMarkedAlt,
+  // FaPlusCircle,
   FaStar,
   FaTools,
   FaUserCog,
   FaUsers,
+  FaQuestionCircle,
 } from "react-icons/fa";
 import type { IconType } from "react-icons";
 
@@ -47,16 +48,30 @@ export const companyNavSections: { label: string; items: CompanyNavItem[] }[] = 
     ],
   },
   {
-    label: "Business Profile",
+    label: "Add Company",
     items: [
-      { label: "Add Company", href: "/company-dashboard/add-company", icon: FaPlusCircle },
-      { label: "Company List", href: "/company-dashboard/company-list", icon: FaBuilding },
-      { label: "Company Profile", href: "/company-dashboard/profile", icon: FaTools },
-      { label: "Service Areas", href: "/company-dashboard/service-areas", icon: FaMapMarkedAlt },
-      { label: "Services & Pricing", href: "/company-dashboard/services", icon: FaFileInvoiceDollar },
+      // { label: "Business Profile Editor", href: "/company-dashboard/business-profile", icon: FaBuilding },
+      { label: "Company Profile", href: "/company-dashboard/business-profile/header-profile", icon: FaBuilding },
+      { label: "Company Overview", href: "/company-dashboard/business-profile/company-overview", icon: FaTools },
+      { label: " Add Services", href: "/company-dashboard/business-profile/services", icon: FaFileInvoiceDollar },
+      { label: "Add Work Gallery", href: "/company-dashboard/business-profile/media", icon: FaBuilding },
+     { label: "Previous Projects", href: "/company-dashboard/business-profile/projects", icon: FaBriefcase },
       { label: "Reviews", href: "/company-dashboard/reviews", icon: FaStar },
-      { label: "Team", href: "/company-dashboard/team", icon: FaUserCog },
-       { label: " Add Team ", href: "/company-dashboard/Add-team", icon: FaUserCog },
+      { label: "Add Team", href: "/company-dashboard/add-team", icon: FaUserCog },
+      { label: "FAQs", href: "/company-dashboard/faq", icon: FaQuestionCircle },
+      // { label: "Previous Projects", href: "/company-dashboard/business-profile/projects", icon: FaBriefcase },
+     
+      // { label: "Preview Profile", href: "/company-dashboard/business-profile/preview", icon: FaStar },
+      // { label: "Legacy Add Company", href: "/company-dashboard/add-company", icon: FaPlusCircle },
+
+
+      // { label: "Company List", href: "/company-dashboard/company-list", icon: FaBuilding },
+      // { label: "Company Profile", href: "/company-dashboard/profile", icon: FaTools },
+      // { label: "Service Areas", href: "/company-dashboard/service-areas", icon: FaMapMarkedAlt },
+      // { label: "Services & Pricing", href: "/company-dashboard/services", icon: FaFileInvoiceDollar },
+      // { label: "Reviews", href: "/company-dashboard/reviews", icon: FaStar },
+      // { label: "Team", href: "/company-dashboard/team", icon: FaUserCog },
+      { label: "Blogs", href: "/company-dashboard/blogs", icon: FaUserCog },
 
     ],
   },

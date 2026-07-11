@@ -1,0 +1,3 @@
+import SectionForm from "@/components/company-dashboard/business-profile/SectionForm";
+import { companyProfileSeed } from "@/components/company-dashboard/business-profile/profileStore";
+export default function Page() { return <SectionForm section="company-overview" title="Company Overview" description="Tell customers what your company does and why they should choose you." defaults={companyProfileSeed} fields={[{name:"shortDescription",label:"Short Description",type:"textarea"},{name:"fullDescription",label:"Full Description",type:"textarea"},{name:"mission",label:"Mission",type:"textarea"},{name:"vision",label:"Vision",type:"textarea"},{name:"whyChooseUs",label:"Why Choose Us",type:"textarea"}]} />; }
