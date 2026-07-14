@@ -1,2 +1,2 @@
-import SectionForm from "@/components/company-dashboard/business-profile/SectionForm";
-export default function Page() { return <SectionForm section="service-areas" title="Service Areas" description="Define the cities, neighbourhoods, and service radius customers can book." defaults={{areasCovered:"Dallas, Plano, Irving",radius:"25",branchLocation:"Dallas, TX"}} fields={[{name:"areasCovered",label:"Areas Covered",type:"textarea"},{name:"radius",label:"Service Radius (miles)",type:"number"},{name:"branchLocation",label:"Primary Branch Location"}]} />; }
+import { ServiceAreasForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <ServiceAreasForm />; }

@@ -1,2 +1,2 @@
-import CollectionForm from "@/components/company-dashboard/business-profile/CollectionForm";
-export default function Page() { return <CollectionForm section="faqs" title="Frequently Asked Questions" description="Answer booking questions before customers need to ask them." itemName="Question" initial={{question:"Do you offer emergency service?",answer:"Yes, our team handles urgent plumbing calls."}} fields={[{name:"question",label:"Question"},{name:"answer",label:"Answer",type:"textarea"}]} />; }
+import { FaqsForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <FaqsForm />; }

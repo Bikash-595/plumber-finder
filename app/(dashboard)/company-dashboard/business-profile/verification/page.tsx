@@ -1,2 +1,2 @@
-import SectionForm from "@/components/company-dashboard/business-profile/SectionForm";
-export default function Page() { return <SectionForm section="verification" title="Documents & Verification" description="Add secure document URLs until direct upload storage is connected." defaults={{license:"",insurance:"",panVat:"",registrationCertificate:""}} fields={[{name:"license",label:"License Document URL",type:"url"},{name:"insurance",label:"Insurance Document URL",type:"url"},{name:"panVat",label:"PAN / VAT Document URL",type:"url"},{name:"registrationCertificate",label:"Registration Certificate URL",type:"url"}]} />; }
+import { VerificationForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <VerificationForm />; }

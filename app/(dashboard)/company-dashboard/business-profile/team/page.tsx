@@ -1,2 +1,2 @@
-import CollectionForm from "@/components/company-dashboard/business-profile/CollectionForm";
-export default function Page() { return <CollectionForm section="team" title="Team Members" description="Add the people customers may see on your public profile." itemName="Team member" initial={{name:"Chris Bennett",role:"Owner",bio:"Licensed plumbing professional.",photo:""}} fields={[{name:"name",label:"Name"},{name:"role",label:"Role"},{name:"bio",label:"Bio",type:"textarea"},{name:"photo",label:"Photo URL",type:"url"}]} />; }
+import { TeamMembersForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <TeamMembersForm />; }

@@ -17,7 +17,9 @@ import {
   FaUserCog,
   FaUsers,
   FaQuestionCircle,
+ 
 } from "react-icons/fa";
+import { RiDiscountPercentLine } from "react-icons/ri";
 import type { IconType } from "react-icons";
 
 export type CompanySidebarState = "open" | "icons" | "closed";
@@ -55,10 +57,11 @@ export const companyNavSections: { label: string; items: CompanyNavItem[] }[] = 
       { label: "Company Overview", href: "/company-dashboard/business-profile/company-overview", icon: FaTools },
       { label: " Add Services", href: "/company-dashboard/business-profile/services", icon: FaFileInvoiceDollar },
       { label: "Add Work Gallery", href: "/company-dashboard/business-profile/media", icon: FaBuilding },
-     { label: "Previous Projects", href: "/company-dashboard/business-profile/projects", icon: FaBriefcase },
+      { label: "Previous Projects", href: "/company-dashboard/business-profile/projects", icon:   FaBriefcase },
       { label: "Reviews", href: "/company-dashboard/reviews", icon: FaStar },
       { label: "Add Team", href: "/company-dashboard/add-team", icon: FaUserCog },
       { label: "FAQs", href: "/company-dashboard/faq", icon: FaQuestionCircle },
+      { label: "Services Areas ", href: "/company-dashboard/business-profile/service-areas", icon: FaBriefcase },
       // { label: "Previous Projects", href: "/company-dashboard/business-profile/projects", icon: FaBriefcase },
      
       // { label: "Preview Profile", href: "/company-dashboard/business-profile/preview", icon: FaStar },
@@ -71,7 +74,9 @@ export const companyNavSections: { label: string; items: CompanyNavItem[] }[] = 
       // { label: "Services & Pricing", href: "/company-dashboard/services", icon: FaFileInvoiceDollar },
       // { label: "Reviews", href: "/company-dashboard/reviews", icon: FaStar },
       // { label: "Team", href: "/company-dashboard/team", icon: FaUserCog },
-      { label: "Blogs", href: "/company-dashboard/blogs", icon: FaUserCog },
+      { label: "Blogs", href: "/company-dashboard/business-profile/blogs", icon: FaUserCog },
+      { label: "Booking", href: "/company-dashboard/business-profile/booking", icon: FaCalendarAlt },
+      { label: "Special Offers", href: "/company-dashboard/business-profile/offers", icon: RiDiscountPercentLine },
 
     ],
   },

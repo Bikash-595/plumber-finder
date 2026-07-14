@@ -1,3 +1,2 @@
-import SectionForm from "@/components/company-dashboard/business-profile/SectionForm";
-import { companyProfileSeed } from "@/components/company-dashboard/business-profile/profileStore";
-export default function Page() { return <SectionForm section="social-links" title="Social Links" description="Add social accounts customers can use to learn more about your work." defaults={companyProfileSeed} fields={[{name:"facebook",label:"Facebook",type:"url"},{name:"instagram",label:"Instagram",type:"url"},{name:"linkedin",label:"LinkedIn",type:"url"},{name:"youtube",label:"YouTube",type:"url"},{name:"tiktok",label:"TikTok",type:"url"}]} />; }
+import { SocialLinksForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <SocialLinksForm />; }

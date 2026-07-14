@@ -504,8 +504,8 @@ import {
   FaUsers,
   FaUserTie,
   FaFacebook,
-  FaTwitter,
-  FaInstagram,
+  // FaTwitter,
+  // FaInstagram,
   FaLinkedin,
 } from "react-icons/fa";
 
@@ -560,6 +560,9 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
           </div>
 
 
+
+
+
           {/* Rating & Location */}
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm text-gray-600 sm:justify-start">
             <div className="flex items-center gap-1">
@@ -583,10 +586,17 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
           </div>
 
 
+
+
+
           {/* Description */}
           <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
             {plumber.description}
           </p>
+
+
+
+
 
 
 
@@ -613,6 +623,14 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
 
             </div>
           </div>
+
+
+
+
+
+
+
+
 
           {/* Action Buttons (Contact & Social) */}
           <div className="flex flex-wrap items-center justify-center gap-2 pt-2 sm:justify-start">
@@ -724,6 +742,11 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   {/* <FaInstagram className="h-4 w-4" /> */}
                 </a>
               )}
+
+
+
+
+
               {socialLinks.linkedin && (
                 <a
                   href={socialLinks.linkedin}
@@ -739,9 +762,14 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                       height={24}
                      className="object-contain"
                   />
-                  {/* <FaLinkedin className="h-4 w-4" /> */}
+                  <FaLinkedin className="h-4 w-4" />
                 </a>
               )}
+
+
+
+
+
             </div>
           </div>
         </div>

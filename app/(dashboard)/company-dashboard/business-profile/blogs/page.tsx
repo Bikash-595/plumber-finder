@@ -1,2 +1,5 @@
-import CollectionForm from "@/components/company-dashboard/business-profile/CollectionForm";
-export default function Page() { return <CollectionForm section="blogs" title="Blogs" description="Create articles that will appear in the public company profile." itemName="Blog" initial={{title:"Emergency Plumbing: What to Do First",banner:"",description:"Helpful emergency plumbing guidance.",category:"Tips",publishDate:"",}} fields={[{name:"title",label:"Title"},{name:"banner",label:"Banner URL",type:"url"},{name:"description",label:"Description",type:"textarea"},{name:"category",label:"Category"},{name:"publishDate",label:"Publish Date",type:"date"}]} />; }
+import CompanyBlogForm from "@/components/company-dashboard/business-profile/CompanyBlogForm";
+
+export default function Page() {
+  return <CompanyBlogForm />;
+}

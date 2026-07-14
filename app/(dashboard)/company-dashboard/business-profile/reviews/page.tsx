@@ -1,2 +1,2 @@
-import CollectionForm from "@/components/company-dashboard/business-profile/CollectionForm";
-export default function Page() { return <CollectionForm section="reviews" title="Customer Reviews" description="Manage approved manual reviews while API-sourced reviews are being connected." itemName="Review" initial={{customer:"Jordan Smith",rating:"5",review:"Fast and professional emergency repair.",photo:""}} fields={[{name:"customer",label:"Customer Name"},{name:"rating",label:"Rating (1–5)",type:"number"},{name:"review",label:"Review",type:"textarea"},{name:"photo",label:"Customer Photo",type:"url"}]} />; }
+import { CustomerReviewsForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <CustomerReviewsForm />; }

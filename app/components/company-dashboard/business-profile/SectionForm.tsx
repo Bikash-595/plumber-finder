@@ -5,11 +5,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { saveProfileDraft } from "./profileStore";
+import LocalMediaUpload, { type MediaKind } from "./LocalMediaUpload";
 
 export type ProfileField = {
   name: string;
   label: string;
-  type?: "text" | "textarea" | "url" | "email" | "number" | "date" | "tel" | "checkbox";
+  type?: "text" | "textarea" | "url" | "email" | "number" | "date" | "tel" | "checkbox" | MediaKind;
   placeholder?: string;
 };
 
@@ -44,12 +45,14 @@ export default function SectionForm({ section, title, description, fields, defau
       <form onSubmit={form.handleSubmit((values) => setNotice(saveProfileDraft(section, values)))} className="mt-7 space-y-6">
         <div className="grid gap-5 md:grid-cols-2">
           {fields.map((field) => (
-            <label key={field.name} className={field.type === "textarea" ? "md:col-span-2" : ""}>
+            <label key={field.name} className={field.type === "textarea" || field.type === "image" || field.type === "video" || field.type === "media" ? "md:col-span-2" : ""}>
               <span className="text-sm font-semibold text-gray-700">{field.label}</span>
               {field.type === "textarea" ? (
                 <textarea rows={5} placeholder={field.placeholder} {...form.register(field.name)} className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A] focus:ring-2 focus:ring-[#FFD60A]/30" />
               ) : field.type === "checkbox" ? (
                 <input type="checkbox" {...form.register(field.name)} className="ml-3 h-4 w-4 accent-[#0b1f3b]" />
+              ) : field.type === "image" || field.type === "video" || field.type === "media" ? (
+                <LocalMediaUpload label="" kind={field.type} value={String(form.watch(field.name) ?? "")} onChange={(value) => form.setValue(field.name, value, { shouldDirty: true })} />
               ) : (
                 <input type={field.type ?? "text"} placeholder={field.placeholder} {...form.register(field.name)} className="mt-2 w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A] focus:ring-2 focus:ring-[#FFD60A]/30" />
               )}

@@ -1,2 +1,2 @@
-import CollectionForm from "@/components/company-dashboard/business-profile/CollectionForm";
-export default function Page() { return <CollectionForm section="offers" title="Special Offers" description="Dates determine whether offers are active, scheduled, or expired when rendered publicly." itemName="Offer" initial={{title:"Free estimate",description:"Free estimate for qualifying repairs.",discount:"",promoCode:"RAPIDFREE",startDate:"",endDate:"",image:""}} fields={[{name:"title",label:"Offer Title"},{name:"description",label:"Description",type:"textarea"},{name:"discount",label:"Discount"},{name:"promoCode",label:"Promo Code"},{name:"startDate",label:"Start Date",type:"date"},{name:"endDate",label:"End Date",type:"date"},{name:"image",label:"Offer Image",type:"url"}]} />; }
+import { SpecialOffersForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <SpecialOffersForm />; }

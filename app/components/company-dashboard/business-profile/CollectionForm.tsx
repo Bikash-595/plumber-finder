@@ -6,6 +6,7 @@ import { z } from "zod";
 import { useState } from "react";
 import { saveProfileDraft } from "./profileStore";
 import type { ProfileField } from "./SectionForm";
+import LocalMediaUpload from "./LocalMediaUpload";
 
 type Props = { section: string; title: string; description: string; itemName: string; fields: ProfileField[]; initial?: Record<string, string | boolean> };
 
@@ -34,7 +35,7 @@ export default function CollectionForm({ section, title, description, itemName, 
         <div className="mb-4 flex items-center justify-between">
           <h2 className="font-bold text-gray-800">{itemName} {index + 1}</h2>{rows.length > 1 && <button type="button" onClick={() => remove(index)} className="text-sm font-bold text-red-600">Delete</button>}</div>
           
-        <div className="grid gap-4 md:grid-cols-2">{fields.map((field) => <label key={field.name} className={field.type === "textarea" ? "md:col-span-2" : ""}><span className="text-sm font-semibold text-gray-700">{field.label}</span>{field.type === "textarea" ? <textarea rows={4} {...form.register(`items.${index}.${field.name}`)} className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A]" /> : field.type === "checkbox" ? <input type="checkbox" {...form.register(`items.${index}.${field.name}`)} className="ml-3 h-4 w-4 accent-[#0b1f3b]" /> : <input type={field.type ?? "text"} {...form.register(`items.${index}.${field.name}`)} className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A]" />}</label>)}</div>
+        <div className="grid gap-4 md:grid-cols-2">{fields.map((field) => <label key={field.name} className={field.type === "textarea" || field.type === "image" || field.type === "video" || field.type === "media" ? "md:col-span-2" : ""}><span className="text-sm font-semibold text-gray-700">{field.label}</span>{field.type === "textarea" ? <textarea rows={4} {...form.register(`items.${index}.${field.name}`)} className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A]" /> : field.type === "checkbox" ? <input type="checkbox" {...form.register(`items.${index}.${field.name}`)} className="ml-3 h-4 w-4 accent-[#0b1f3b]" /> : field.type === "image" || field.type === "video" || field.type === "media" ? <LocalMediaUpload label="" kind={field.type} value={String(form.watch(`items.${index}.${field.name}`) ?? "")} onChange={(value) => form.setValue(`items.${index}.${field.name}`, value)} /> : <input type={field.type ?? "text"} {...form.register(`items.${index}.${field.name}`)} className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-sm outline-none focus:border-[#FFD60A]" />}</label>)}</div>
       </article>)}
       <button type="button" onClick={() => append(blank)} className="rounded-xl border border-[#0b1f3b] px-4 py-2.5 text-sm font-bold text-[#0b1f3b] hover:bg-[#0b1f3b] hover:text-white">+ Add {itemName}</button>
       {notice && <p className="rounded-lg bg-emerald-50 px-3 py-2 text-sm font-medium text-emerald-700">{notice}</p>}

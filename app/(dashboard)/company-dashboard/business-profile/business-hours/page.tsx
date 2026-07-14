@@ -1,2 +1,2 @@
-import SectionForm from "@/components/company-dashboard/business-profile/SectionForm";
-export default function Page() { return <SectionForm section="business-hours" title="Business Hours" description="Set your normal opening times. Add 24-hour or closed notes for each day in the hours text." defaults={{monday:"8:00 AM – 6:00 PM",tuesday:"8:00 AM – 6:00 PM",wednesday:"8:00 AM – 6:00 PM",thursday:"8:00 AM – 6:00 PM",friday:"8:00 AM – 6:00 PM",saturday:"8:00 AM – 2:00 PM",sunday:"Closed"}} fields={[{name:"monday",label:"Monday"},{name:"tuesday",label:"Tuesday"},{name:"wednesday",label:"Wednesday"},{name:"thursday",label:"Thursday"},{name:"friday",label:"Friday"},{name:"saturday",label:"Saturday"},{name:"sunday",label:"Sunday"}]} />; }
+import { BusinessHoursForm } from "@/components/company-dashboard/business-profile/forms/BusinessProfileForms";
+export default function Page() { return <BusinessHoursForm />; }
