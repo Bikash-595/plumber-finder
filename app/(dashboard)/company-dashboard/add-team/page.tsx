@@ -1,5 +1,5 @@
-import TeamSection from "@/components/company-dashboard/sections/TeamSection";
+import TeamManagementForm from "@/components/company-dashboard/team/TeamManagementForm";
 
 export default function CompanyTeamPage() {
-  return <TeamSection />;
+  return <TeamManagementForm />;
 }
