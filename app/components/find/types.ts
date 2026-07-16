@@ -76,6 +76,7 @@ export interface Plumber {
   specializations: string[];
   responseTime: string;
   teamSize: number;
+  teamMembers?: TeamMember[];
   socialLinks?: {
     facebook?: string;
     twitter?: string;
@@ -130,6 +131,19 @@ export interface Plumber {
   }[];
 
 
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  photo?: string;
+  specialties: string[];
+  experience: number;
+  certificates: string[];
+  licenseNumber?: string;
+  availability: string;
+  bio: string;
 }
 
 

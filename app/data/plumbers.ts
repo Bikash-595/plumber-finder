@@ -93,6 +93,61 @@ function buildDefaultFaqs(plumber: Plumber): NonNullable<Plumber["faqs"]> {
   ];
 }
 
+function buildDefaultTeam(plumber: Plumber): NonNullable<Plumber["teamMembers"]> {
+  const serviceOne = plumber.services[0] ?? "General plumbing";
+  const serviceTwo = plumber.services[1] ?? "Leak repair";
+  const primarySpecialty = plumber.specializations[0] ?? "Residential plumbing";
+  const years = Math.max(3, plumber.yearsInBusiness);
+
+  return [
+    {
+      id: `${plumber.id}-owner`,
+      name: plumber.ownerName,
+      role: "Owner & Lead Plumber",
+      photo: plumber.logo,
+      specialties: [primarySpecialty, serviceOne],
+      experience: years,
+      certificates: plumber.certifications.slice(0, 2),
+      licenseNumber: plumber.licenseNumber,
+      availability: plumber.availability,
+      bio: `${plumber.ownerName} leads the ${plumber.companyName} team with a focus on clear communication and dependable work.`,
+    },
+    {
+      id: `${plumber.id}-senior-tech`,
+      name: "Alex Morgan",
+      role: "Senior Plumbing Technician",
+      photo: "https://randomuser.me/api/portraits/men/32.jpg",
+      specialties: [serviceOne, serviceTwo],
+      experience: Math.max(5, years - 3),
+      certificates: ["Licensed technician", "Safety trained"],
+      availability: "Available for appointments",
+      bio: `Alex handles diagnostics and repairs across ${plumber.location}, with particular experience in ${serviceOne.toLowerCase()}.`,
+    },
+    {
+      id: `${plumber.id}-service-tech`,
+      name: "Taylor Brooks",
+      role: "Service Technician",
+      photo: "https://randomuser.me/api/portraits/women/44.jpg",
+      specialties: [serviceTwo, "Preventive maintenance"],
+      experience: Math.max(3, years - 6),
+      certificates: ["Customer care trained", "OSHA safety"],
+      availability: "Available this week",
+      bio: "Taylor helps homeowners understand their options and delivers careful, tidy service visits.",
+    },
+    {
+      id: `${plumber.id}-coordinator`,
+      name: "Jordan Lee",
+      role: "Service Coordinator",
+      photo: "https://randomuser.me/api/portraits/men/46.jpg",
+      specialties: ["Scheduling", "Customer support"],
+      experience: Math.max(2, Math.floor(years / 2)),
+      certificates: ["Customer service trained"],
+      availability: "Office hours",
+      bio: "Jordan coordinates appointments and makes sure customers have clear arrival and service information.",
+    },
+  ];
+}
+
 function slugifyProjectId(value: string, fallback: string) {
   const slug = value
     .toLowerCase()
@@ -844,5 +899,6 @@ export const plumbers: Plumber[] = rawPlumbers.map((plumber) => {
     projects,
     blogs: typedPlumber.blogs?.length ? typedPlumber.blogs : buildDefaultBlogs(typedPlumber),
     faqs: typedPlumber.faqs?.length ? typedPlumber.faqs : buildDefaultFaqs(typedPlumber),
+    teamMembers: typedPlumber.teamMembers?.length ? typedPlumber.teamMembers : buildDefaultTeam(typedPlumber),
   };
 });

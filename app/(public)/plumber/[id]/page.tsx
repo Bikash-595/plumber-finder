@@ -190,6 +190,7 @@ import ProfilePreviousProjects from "@/components/plumber/ProfilePreviousProject
 import DiscountCard from "@/components/plumber/DiscountCard";
 import ProfileBlogSection from "@/components/plumber/ProfileBlogSection";
 import ProfileFaq from "@/components/plumber/ProfileFaq";
+import ProfileTeam from "@/components/plumber/ProfileTeam";
 
 const RECENT_DEALS_KEY = "plumberfinder_recent_deals";
 
@@ -233,6 +234,7 @@ export default function PlumberProfilePage({ params }: { params: Promise<{ id: s
             <ProfileHeader plumber={plumber} />
             <ProfileStats plumber={plumber} />
             <ProfileServices plumber={plumber} />
+            <ProfileTeam plumber={plumber} />
 
 
             {plumber.media && (plumber.media.images.length > 0 || plumber.media.videos.length > 0) && (
