@@ -140,6 +140,13 @@ export interface TeamMember {
   photo?: string;
   specialties: string[];
   experience: number;
+  experienceMonths?: number;
+  projectsInvolved?: number;
+  projectsCompleted?: number;
+  careerStartMonth?: number;
+  careerStartYear?: number;
+  joinedCompanyMonth?: number;
+  joinedCompanyYear?: number;
   certificates: string[];
   licenseNumber?: string;
   availability: string;
