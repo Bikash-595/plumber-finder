@@ -16,7 +16,7 @@ export default function BookingWidget({ plumber }: { plumber: Plumber }) {
   };
 
   return (
-    <div className="sticky top-8 rounded-2xl bg-white p-6 shadow-lg border border-gray-200 transition-all hover:shadow-xl">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-lg transition-all hover:shadow-xl sm:p-6 lg:sticky lg:top-8">
       <h3 className="text-xl font-bold text-gray-900">📋 Book This Plumber</h3>
       <p className="mt-1 text-sm text-gray-500">Fill in your details and we&apos;ll connect you with {plumber.companyName}.</p>
 

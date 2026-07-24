@@ -492,7 +492,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link"; 
 import { Plumber } from "@/components/find/types";
 import {
   FaStar,
@@ -534,7 +533,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
         </div>
 
         {/* Content */}
-        <div className="flex-1 space-y-4 text-center sm:text-left">
+        <div className="min-w-0 flex-1 space-y-4 text-center sm:text-left">
           {/* Name and badges */}
           <div className="flex flex-wrap items-center justify-center gap-2 sm:justify-start">
             <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
@@ -579,7 +578,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
               <FaMapMarkerAlt className="h-3.5 w-3.5 text-gray-500" />
 
 
-              <span className="text-gray-600">{plumber.location}</span>
+              <span className="break-words text-gray-600">{plumber.location}</span>
 
 
             </div>
@@ -640,7 +639,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             {/* Phone */}
             <a
               href={`tel:${plumber.phone}`}
-              className="inline-flex items-center gap-2 rounded-full bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-[#FFD60A] hover:text-gray-900"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-sm font-medium text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
               title="Call"
             >
               <FaPhone className="h-3.5 w-3.5" />
@@ -654,7 +653,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
             {/* Email */}
             <a
               href={`mailto:${plumber.email}`}
-              className="inline-flex items-center gap-2 rounded-full bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-[#FFD60A] hover:text-gray-900"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-sm font-medium text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
               title="Email"
             >
               <FaEnvelope className="h-3.5 w-3.5" />
@@ -670,7 +669,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                 href={plumber.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gray-700 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-[#FFD60A] hover:text-gray-900"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-700 text-sm font-medium text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
                 title="Website"
               >
                 <FaGlobe className="h-3.5 w-3.5" />
@@ -690,7 +689,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   href={socialLinks.facebook}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
                   title="Facebook"
                 >
                   <FaFacebook className="h-4 w-4" />
@@ -703,7 +702,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   href={socialLinks.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
                   title="X (Twitter)"
                 >
                    <Image
@@ -729,7 +728,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   href={socialLinks.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray=]00 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
                   // title="Instagram"
                 >
                   <Image
@@ -752,7 +751,7 @@ export default function ProfileHeader({ plumber }: { plumber: Plumber }) {
                   href={socialLinks.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-gray-600 transition hover:bg-[#FFD60A] hover:text-gray-900"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-700 text-white transition hover:bg-[#FFD60A] hover:text-gray-900"
                   title="LinkedIn"
                 >
                     <Image

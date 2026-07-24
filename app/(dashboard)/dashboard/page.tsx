@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { readStoredUser, type AppUser } from "@/components/utils/auth";
 import {
@@ -14,7 +14,11 @@ import {
 } from "react-icons/fa";
 
 export default function DashboardPage() {
-  const [user] = useState<AppUser | null>(() => readStoredUser());
+  const [user, setUser] = useState<AppUser | null>(null);
+
+  useEffect(() => {
+    setUser(readStoredUser());
+  }, []);
 
   const firstName = user?.name?.split(" ")[0] || "User";
 

@@ -762,7 +762,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchLocation, setSearchLocation] = useState("Chicago");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [user, setUser] = useState<AppUser | null>(() => readStoredUser());
+  const [user, setUser] = useState<AppUser | null>(null);
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const router = useRouter();
   const searchWrapRef = useRef<HTMLDivElement>(null);
@@ -820,6 +820,7 @@ export function Header() {
 
   useEffect(() => {
     const syncUser = () => setUser(readStoredUser());
+    syncUser();
     window.addEventListener("storage", syncUser);
     window.addEventListener("focus", syncUser);
     return () => {

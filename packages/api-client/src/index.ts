@@ -21,7 +21,7 @@ export class ApiClientError extends Error {
   }
 }
 
-const DEFAULT_BASE_URL = "http://localhost:4000/api";
+const DEFAULT_BASE_URL = "http://localhost:3300/api";
 
 export function createApiClient(options: ApiClientOptions = {}) {
   const baseUrl =

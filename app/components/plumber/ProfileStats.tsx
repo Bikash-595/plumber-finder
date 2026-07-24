@@ -220,19 +220,19 @@ export default function ProfileStats({ plumber }: { plumber: Plumber }) {
   ];
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm border border-gray-200">
-      <h2 className="text-xl font-bold text-gray-900 mb-5">Company at a Glance</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5">
+    <div className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm sm:p-6">
+      <h2 className="mb-4 text-xl font-bold text-gray-900 sm:mb-5">Company at a Glance</h2>
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-4 md:grid-cols-4 md:gap-5">
         {stats.map((stat, idx) => (
           <div
             key={idx}
-            className="group text-center p-3 rounded-xl transition hover:shadow-md hover:bg-gray-50"
+            className="group rounded-xl p-2 text-center transition hover:bg-gray-50 hover:shadow-md sm:p-3"
           >
             <stat.icon className="mx-auto h-6 w-6 text-[#FFD60A] group-hover:scale-110 transition-transform" />
             <div className="mt-2 text-xs font-medium text-gray-500 uppercase tracking-wide">
               {stat.label}
             </div>
-            <div className="mt-1 text-base font-semibold text-gray-900">
+            <div className="mt-1 break-words text-sm font-semibold text-gray-900 sm:text-base">
               {stat.value}
             </div>
           </div>

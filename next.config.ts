@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
     staticGenerationMinPagesPerWorker: 1,
   },
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     qualities: [60, 75],
     remotePatterns: [
       {
@@ -22,6 +25,11 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "logo.clearbit.com",
+      },
+      {
+        protocol: "https",
+        hostname: "api.dicebear.com",
+        pathname: "/**",
       },
 
       // ✅ ADD THIS (IMPORTANT)

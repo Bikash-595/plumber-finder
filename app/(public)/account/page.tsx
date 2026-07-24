@@ -9,14 +9,14 @@ import { FaBell, FaHeart, FaShoppingCart, FaSignOutAlt } from "react-icons/fa";
 import { clearStoredUser, readStoredUser, type AppUser, getInitials } from "@/components/utils/auth";
 
 export default function AccountPage() {
-  const [user] = useState<AppUser | null>(() => readStoredUser());
+  const [user, setUser] = useState<AppUser | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.replace("/login");
-    }
-  }, [router, user]);
+    const storedUser = readStoredUser();
+    if (!storedUser) router.replace("/login");
+    else setUser(storedUser);
+  }, [router]);
 
   if (!user) return null;
 

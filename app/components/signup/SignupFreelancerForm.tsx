@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
+import { authenticateAccount } from "@/components/utils/auth";
 
 interface SignupFreelancerFormProps {
   onBack?: () => void;
@@ -27,13 +28,12 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [serviceAreas, setServiceAreas] = useState("");
-  const [skills, setSkills] = useState("");
-  const [hourlyRate, setHourlyRate] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
@@ -41,8 +41,8 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
       return;
     }
 
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       return;
     }
 
@@ -52,8 +52,12 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
     }
 
     setPasswordError("");
-    onComplete?.(fullName, email);
-    alert("Freelancer account created! You can now manage your profile and leads.");
+    try {
+      const account = await authenticateAccount("freelancer", "signup", { name: fullName, email, password, phone: `${phoneCountryCode}${phoneNumber}` });
+      onComplete?.(account.name, account.email);
+    } catch (error) {
+      setPasswordError(error instanceof Error ? error.message : "Could not create the freelancer account.");
+    }
   };
 
   const selectedCode = countryCodes.find((item) => item.code === phoneCountryCode);
@@ -73,13 +77,7 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
         </p>
       </div>
 
-      <button
-        type="button"
-        className="group mt-6 flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-all hover:border-[#FFD60A] hover:bg-[#FFD60A]/5 hover:shadow-md"
-      >
-        <FcGoogle className="h-5 w-5 transition-transform group-hover:scale-110" />
-        Continue with Google
-      </button>
+      <GoogleAuthButton accountType="freelancer" onComplete={(name, accountEmail) => onComplete?.(name, accountEmail)} />
 
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
@@ -151,77 +149,46 @@ export default function SignupFreelancerForm({ onBack, onComplete }: SignupFreel
             <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
               PASSWORD
             </label>
+            <div className="relative mt-1">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
                 if (passwordError) setPasswordError("");
               }}
               placeholder="Create a secure password"
-              className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
+              className="block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 pr-10 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
               required
             />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700" aria-label="Toggle password visibility">
+              {showPassword ? "🙈" : "👁️"}
+            </button>
+            </div>
           </div>
+
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
               CONFIRM PASSWORD
             </label>
+            <div className="relative mt-1">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
                 if (passwordError) setPasswordError("");
               }}
               placeholder="Confirm your password"
-              className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
+              className="block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 pr-10 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
               required
             />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700" aria-label="Toggle confirm password visibility">
+              {showConfirmPassword ? "🙈" : "👁️"}
+            </button>
+            </div>
           </div>
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            SERVICE AREAS
-          </label>
-          <input
-            type="text"
-            value={serviceAreas}
-            onChange={(e) => setServiceAreas(e.target.value)}
-            placeholder="Ex: Los Angeles, Santa Monica, 90210"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            TOP SERVICES
-          </label>
-          <input
-            type="text"
-            value={skills}
-            onChange={(e) => setSkills(e.target.value)}
-            placeholder="Ex: Emergency repair, leak detection, water heater install"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            HOURLY RATE
-          </label>
-          <input
-            type="text"
-            value={hourlyRate}
-            onChange={(e) => setHourlyRate(e.target.value)}
-            placeholder="$75/hr"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-            required
-          />
         </div>
 
         <div className="space-y-2">

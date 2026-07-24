@@ -18,7 +18,7 @@ export default function DiscountCard({ plumber }: { plumber: Plumber }) {
   };
 
   return (
-    <div className="mt-6 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 p-5 shadow-sm">
+    <div className="rounded-2xl border border-green-200 bg-gradient-to-r from-green-50 to-emerald-50 p-4 shadow-sm sm:p-5">
       <div className="flex items-start gap-3">
         <div className="rounded-full bg-green-100 p-2 text-green-700">
           <FaGift className="h-5 w-5" />

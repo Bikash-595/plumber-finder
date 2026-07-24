@@ -3,33 +3,36 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import { useRouter } from "next/navigation";
-import { storeUser } from "@/components/utils/auth";
+import { loginWithEmail, readStoredUser, storeUser, type AccountType } from "@/components/utils/auth";
+import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [accountType, setAccountType] = useState<"seeker" | "company" | "freelancer">("seeker");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const goToDashboard = (name: string, accountEmail: string, detectedAccountType: AccountType = accountType) => {
+    storeUser({ ...readStoredUser(), name, email: accountEmail, avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`, accountType: detectedAccountType });
+    router.push(detectedAccountType === "company" ? "/company-dashboard" : detectedAccountType === "freelancer" ? "/freelancer" : "/dashboard");
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const name = email.split("@")[0].replace(/[._-]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase()) || "User";
-    storeUser({
-      name,
-      email,
-      avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
-      accountType,
-    });
-    router.push(
-      accountType === "company"
-        ? "/company-dashboard"
-        : accountType === "freelancer"
-        ? "/freelancer"
-        : "/dashboard"
-    );
+    setFormError("");
+    setIsSubmitting(true);
+    try {
+      const account = await loginWithEmail(email, password, accountType);
+      goToDashboard(account.name, account.email, account.accountType);
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : "Unable to log in.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -67,13 +70,7 @@ export default function LoginPage() {
             </div>
 
             {/* Google OAuth */}
-            <button
-              type="button"
-              className="group mt-6 flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-all hover:border-[#FFD60A] hover:bg-[#FFD60A]/5 hover:shadow-md"
-            >
-              <FcGoogle className="h-5 w-5 transition-transform group-hover:scale-110" />
-              Continue with Google
-            </button>
+            <GoogleAuthButton accountType={accountType} onComplete={goToDashboard} />
 
             {/* Divider */}
             <div className="relative my-6">
@@ -102,7 +99,10 @@ export default function LoginPage() {
                     <button
                       key={option.value}
                       type="button"
-                      onClick={() => setAccountType(option.value as "seeker" | "company" | "freelancer")}
+                      onClick={() => {
+                        setAccountType(option.value as "seeker" | "company" | "freelancer");
+                        setFormError("");
+                      }}
                       className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
                         accountType === option.value
                           ? "bg-[#FFD60A] text-[#0b1f3b] shadow-sm"
@@ -153,7 +153,7 @@ export default function LoginPage() {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     className="block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 pr-10 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
                     required
@@ -168,11 +168,14 @@ export default function LoginPage() {
                 </div>
               </div>
 
+              {formError && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm font-medium text-red-700">{formError}</p>}
+
               <button
                 type="submit"
-                className="mt-4 w-full rounded-full bg-[#FFD60A] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:brightness-105 hover:shadow-[#FFD60A]/30 active:scale-[0.98]"
+                disabled={isSubmitting}
+                className="mt-4 w-full rounded-full bg-[#FFD60A] px-4 py-2.5 text-sm font-semibold text-white shadow-md transition-all hover:brightness-105 hover:shadow-[#FFD60A]/30 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Log In
+                {isSubmitting ? "Logging in…" : "Log In"}
               </button>
             </form>
 

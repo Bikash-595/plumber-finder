@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
+import { authenticateAccount } from "@/components/utils/auth";
 
 interface SignupSeekerFormProps {
   onBack?: () => void;
@@ -37,7 +38,7 @@ export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFor
   const [agreeSms, setAgreeSms] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Password match validation
@@ -45,8 +46,8 @@ export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFor
       setPasswordError("Passwords do not match");
       return;
     }
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       return;
     }
     setPasswordError("");
@@ -56,8 +57,12 @@ export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFor
       return;
     }
 
-    onComplete?.(fullName, email);
-    alert("Account created! You can now find plumbers near you.");
+    try {
+      const account = await authenticateAccount("seeker", "signup", { name: fullName, email, password, phone: `${phoneCountryCode}${phoneNumber}`, address });
+      onComplete?.(account.name, account.email);
+    } catch (error) {
+      setPasswordError(error instanceof Error ? error.message : "Could not create your account.");
+    }
   };
 
   // Get placeholder example for selected country code
@@ -79,13 +84,7 @@ export default function SignupSeekerForm({ onBack, onComplete }: SignupSeekerFor
       </div>
 
       {/* Google Signup */}
-      <button
-        type="button"
-        className="group mt-6 flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-all hover:border-[#FFD60A] hover:bg-[#FFD60A]/5 hover:shadow-md"
-      >
-        <FcGoogle className="h-5 w-5 transition-transform group-hover:scale-110" />
-        Continue with Google
-      </button>
+      <GoogleAuthButton accountType="seeker" onComplete={(name, accountEmail) => onComplete?.(name, accountEmail)} />
 
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">

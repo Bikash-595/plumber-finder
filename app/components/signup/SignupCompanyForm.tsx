@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
+import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
+import { authenticateAccount } from "@/components/utils/auth";
 
 interface SignupCompanyFormProps {
   onBack?: () => void;
@@ -32,13 +33,9 @@ export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyF
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [licenseNumber, setLicenseNumber] = useState("");
-  const [serviceAreas, setServiceAreas] = useState("");
-  const [website, setWebsite] = useState("");
-  const [agreeTerms, setAgreeTerms] = useState(false);
   const [passwordError, setPasswordError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // Password validation
@@ -46,19 +43,23 @@ export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyF
       setPasswordError("Passwords do not match");
       return;
     }
-    if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters");
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters");
       return;
     }
     setPasswordError("");
 
-    if (!companyName.trim() || !email.trim() || !phoneNumber.trim() || !licenseNumber.trim() || !serviceAreas.trim() || !agreeTerms) {
+    if (!companyName.trim() || !email.trim() || !phoneNumber.trim()) {
       setPasswordError("Please complete all required fields");
       return;
     }
 
-    onComplete?.(companyName, email);
-    alert("Company registration submitted for review. You'll be notified once approved.");
+    try {
+      const account = await authenticateAccount("company", "signup", { companyName, email, password, phone: `${phoneCountryCode}${phoneNumber}` });
+      onComplete?.(account.name, account.email);
+    } catch (error) {
+      setPasswordError(error instanceof Error ? error.message : "Could not register the company.");
+    }
   };
 
   const selectedCode = countryCodes.find((c) => c.code === phoneCountryCode);
@@ -78,13 +79,7 @@ export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyF
         </p>
       </div>
 
-      <button
-        type="button"
-        className="group mt-6 flex w-full items-center justify-center gap-3 rounded-full border border-gray-300 bg-white px-4 py-2.5 text-sm font-semibold text-gray-700 transition-all hover:border-[#FFD60A] hover:bg-[#FFD60A]/5 hover:shadow-md"
-      >
-        <FcGoogle className="h-5 w-5 transition-transform group-hover:scale-110" />
-        Continue with Google
-      </button>
+      <GoogleAuthButton accountType="company" companyName={companyName} onComplete={(name, accountEmail) => onComplete?.(name, accountEmail)} />
 
       <div className="relative my-6">
         <div className="absolute inset-0 flex items-center">
@@ -196,69 +191,22 @@ export default function SignupCompanyForm({ onBack, onComplete }: SignupCompanyF
               }}
               placeholder="Confirm your password"
               className={`block w-full rounded-full border bg-white/80 px-4 py-2.5 pr-10 text-gray-900 placeholder-gray-400 outline-none transition-all focus:ring-1 focus:bg-white ${
-                passwordError
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500"
-                  : "border-gray-300 focus:border-[#FFD60A] focus:ring-[#FFD60A]"
+                passwordError ? "border-red-500 focus:border-red-500 focus:ring-red-500" : "border-gray-300 focus:border-[#FFD60A] focus:ring-[#FFD60A]"
               }`}
               required
             />
-            <button
-              type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-              className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700"
-            >
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 hover:text-gray-700" aria-label="Toggle confirm password visibility">
               {showConfirmPassword ? "🙈" : "👁️"}
             </button>
           </div>
-          {passwordError && <p className="mt-1 text-xs text-red-500">{passwordError}</p>}
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            LICENSE NUMBER (optional)
-          </label>
-          <input
-            type="text"
-            value={licenseNumber}
-            onChange={(e) => setLicenseNumber(e.target.value)}
-            placeholder="State license #"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            SERVICE AREAS (cities / zip codes)
-          </label>
-          <input
-            type="text"
-            value={serviceAreas}
-            onChange={(e) => setServiceAreas(e.target.value)}
-            placeholder="e.g., Los Angeles, Santa Monica, 90210"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-gray-600">
-            WEBSITE (optional)
-          </label>
-          <input
-            type="url"
-            value={website}
-            onChange={(e) => setWebsite(e.target.value)}
-            placeholder="https://www.abcplumbing.com"
-            className="mt-1 block w-full rounded-full border border-gray-300 bg-white/80 px-4 py-2.5 text-gray-900 placeholder-gray-400 outline-none transition-all focus:border-[#FFD60A] focus:ring-1 focus:ring-[#FFD60A] focus:bg-white"
-          />
-        </div>
+        {passwordError && <p className="text-xs font-semibold text-red-500">{passwordError}</p>}
 
         <div className="space-y-2">
           <label className="flex items-start gap-2 text-sm">
             <input
               type="checkbox"
-              checked={agreeTerms}
-              onChange={(e) => setAgreeTerms(e.target.checked)}
               className="mt-0.5 rounded border-gray-300 text-[#FFD60A] focus:ring-[#FFD60A]"
               required
             />

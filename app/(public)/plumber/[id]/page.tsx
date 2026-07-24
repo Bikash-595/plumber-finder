@@ -228,9 +228,9 @@ export default function PlumberProfilePage({ params }: { params: Promise<{ id: s
 
   return (
     <main className="min-h-screen bg-gray-50 font-sans">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 space-y-6">
+      <div className="mx-auto max-w-7xl px-3 py-5 sm:px-6 sm:py-8 lg:px-8">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,2fr)_minmax(18rem,1fr)] lg:gap-8">
+          <div className="min-w-0 space-y-5 sm:space-y-6">
             <ProfileHeader plumber={plumber} />
             <ProfileStats plumber={plumber} />
             <ProfileServices plumber={plumber} />
@@ -253,10 +253,10 @@ export default function PlumberProfilePage({ params }: { params: Promise<{ id: s
             
             
           </div>
-          <div className="lg:col-span-1 space-y-6">
+          <aside className="min-w-0 space-y-5 sm:space-y-6">
             <DiscountCard plumber={plumber} />
              <BookingWidget plumber={plumber} />
-          </div>
+          </aside>
         </div>
       </div>
     </main>

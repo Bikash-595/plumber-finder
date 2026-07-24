@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaBell,
   FaBars,
@@ -45,7 +45,7 @@ function getPageLabel(pathname: string) {
 export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [user] = useState<AppUser | null>(() => readStoredUser());
+  const [user, setUser] = useState<AppUser | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const displayName = user?.name || "Guest User";
@@ -53,6 +53,10 @@ export default function UserNavbar({ onToggleSidebar }: UserNavbarProps) {
   const initials = getInitials(displayName) || "GU";
   const quickLinkActive = "bg-[#FFD60A] text-[#0b1f3b]";
   const quickLinkDefault = "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
+
+  useEffect(() => {
+    setUser(readStoredUser());
+  }, []);
 
   const handleLogout = () => {
     clearStoredUser();

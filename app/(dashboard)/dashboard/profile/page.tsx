@@ -7,14 +7,21 @@ import { readStoredUser, storeUser, type AppUser } from "@/components/utils/auth
 
 export default function ProfileSettingsPage() {
   const router = useRouter();
-  const [user, setUser] = useState<AppUser | null>(() => readStoredUser());
-  const [name, setName] = useState(user?.name || "");
-  const [email, setEmail] = useState(user?.email || "");
+  const [user, setUser] = useState<AppUser | null>(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    if (!user) router.push("/login");
-  }, [router, user]);
+    const storedUser = readStoredUser();
+    if (!storedUser) {
+      router.push("/login");
+      return;
+    }
+    setUser(storedUser);
+    setName(storedUser.name);
+    setEmail(storedUser.email);
+  }, [router]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

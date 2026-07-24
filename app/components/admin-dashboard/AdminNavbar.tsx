@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaBell,
   FaBars,
@@ -38,13 +38,17 @@ function getPageLabel(pathname: string) {
 export default function AdminNavbar({ onToggleSidebar }: AdminNavbarProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const [user] = useState<AppUser | null>(() => readStoredUser());
+  const [user, setUser] = useState<AppUser | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const displayName = user?.name || "Admin";
   const displayEmail = user?.email || "admin@plumberfinder.com";
   const initials = getInitials(displayName) || "AD";
   const quickLinkActive = "bg-[#0b1f3b] text-white";
   const quickLinkDefault = "text-gray-600 hover:bg-gray-100 hover:text-gray-900";
+
+  useEffect(() => {
+    setUser(readStoredUser());
+  }, []);
 
   const handleLogout = () => {
     clearStoredUser();

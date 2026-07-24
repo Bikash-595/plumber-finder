@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAuthProvider } from "@/components/auth/GoogleAuthProvider";
 import "./globals.css";
 
 const inter = Inter({
@@ -43,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <body className="min-h-full bg-white text-gray-800" style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}>
-        {children}
+        <GoogleAuthProvider>{children}</GoogleAuthProvider>
       </body>
     </html>
   );

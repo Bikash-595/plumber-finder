@@ -9,12 +9,8 @@ const securityHeaders = {
   "Permissions-Policy": "camera=(), microphone=(), geolocation=(self), payment=()",
 };
 
-export function middleware(request: NextRequest) {
-  const response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
+export function proxy(request: NextRequest) {
+  const response = NextResponse.next({ request: { headers: request.headers } });
 
   Object.entries(securityHeaders).forEach(([key, value]) => {
     response.headers.set(key, value);

@@ -410,7 +410,7 @@ import SignupChooseType from "@/components/signup/SignupChooseType";
 import SignupSeekerForm from "@/components/signup/SignupSeekerForm";
 import SignupCompanyForm from "@/components/signup/SignupCompanyForm";
 import SignupFreelancerForm from "@/components/signup/SignupFreelancerForm";
-import { storeUser } from "@/components/utils/auth";
+import { readStoredUser, storeUser } from "@/components/utils/auth";
 
 export default function SignupPage() {
   const [step, setStep] = useState<"choose" | "form">("choose");
@@ -434,8 +434,8 @@ export default function SignupPage() {
 
   const handleSignupComplete = (name: string, email: string) => {
     const selectedAccountType = accountType ?? "seeker";
-
     storeUser({
+      ...readStoredUser(),
       name,
       email,
       avatarUrl: `https://api.dicebear.com/8.x/initials/svg?seed=${encodeURIComponent(name)}`,
