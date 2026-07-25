@@ -27,7 +27,7 @@ export function FaqsForm() {
 }
 
 export function HeaderProfileForm() {
-  return <SectionForm section="header-profile" title="Header Profile" description="Set the essential identity displayed at the top of your public listing." defaults={companyProfileSeed} fields={[{ name: "logo", label: "Company Logo", type: "image" }, { name: "coverImage", label: "Cover Image", type: "image" }, { name: "companyName", label: "Company Name" }, { name: "ownerName", label: "Owner Name" }, { name: "companyType", label: "Company Type" }, { name: "yearsInBusiness", label: "Years in Business", type: "number" }, { name: "licenseNumber", label: "License Number" }, { name: "insurance", label: "Insurance" }, { name: "certifications", label: "Certifications" }]} />;
+  return <SectionForm section="header-profile" apiEndpoint="/companies/header-profile" title="Header Profile" description="Set the essential identity displayed at the top of your public listing." defaults={companyProfileSeed} fields={[{ name: "logo", label: "Company Logo", type: "image" }, { name: "coverImage", label: "Cover Image", type: "image" }, { name: "companyName", label: "Company Name" }, { name: "ownerName", label: "Owner Name" }, { name: "companyType", label: "Company Type" }, { name: "yearsInBusiness", label: "Years in Business", type: "number" }, { name: "licenseNumber", label: "License Number" }, { name: "insurance", label: "Insurance" }, { name: "certifications", label: "Certifications" }]} />;
 }
 
 export function MapsForm() {

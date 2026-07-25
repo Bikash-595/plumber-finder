@@ -13,7 +13,7 @@ type Props = {
 };
 
 const accepts: Record<MediaKind, string> = {
-  image: "image/png,image/jpeg,image/webp,image/gif",
+  image: "image/*",
   video: "video/mp4,video/webm,video/quicktime",
   media: "image/png,image/jpeg,image/webp,image/gif,video/mp4,video/webm,video/quicktime",
 };
@@ -24,13 +24,35 @@ export default function LocalMediaUpload({ label, value = "", kind = "image", on
   const preview = value;
   const isVideo = kind === "video" || preview.startsWith("data:video/");
 
-  const selectFile = (file?: File) => {
+  const selectFile = async (file?: File) => {
     if (!file) return;
     if (file.size > 4 * 1024 * 1024) {
       setError("Choose a file smaller than 4 MB for this local draft.");
       return;
     }
     setError("");
+    if (file.type.startsWith("image/")) {
+      const image = new Image();
+      const sourceUrl = URL.createObjectURL(file);
+      image.onload = () => {
+        const maxDimension = 1200;
+        const scale = Math.min(1, maxDimension / Math.max(image.width, image.height));
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.max(1, Math.round(image.width * scale));
+        canvas.height = Math.max(1, Math.round(image.height * scale));
+        canvas.getContext("2d")?.drawImage(image, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(sourceUrl);
+        const compressed = canvas.toDataURL("image/webp", 0.78);
+        if (compressed.length > 1_200_000) {
+          setError("This image is still too large after compression. Choose a smaller image.");
+          return;
+        }
+        onChange(compressed);
+      };
+      image.onerror = () => { URL.revokeObjectURL(sourceUrl); setError("This image format could not be processed. Please choose another image."); };
+      image.src = sourceUrl;
+      return;
+    }
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = String(reader.result);

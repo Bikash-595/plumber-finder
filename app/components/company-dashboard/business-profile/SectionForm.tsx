@@ -3,8 +3,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveProfileDraft } from "./profileStore";
+import { readStoredUser } from "@/components/utils/auth";
 import LocalMediaUpload, { type MediaKind } from "./LocalMediaUpload";
 
 export type ProfileField = {
@@ -20,12 +21,13 @@ type Props = {
   description: string;
   fields: ProfileField[];
   defaults: Record<string, string | boolean>;
+  apiEndpoint?: string;
 };
 
-export default function SectionForm({ section, title, description, fields, defaults }: Props) {
+export default function SectionForm({ section, title, description, fields, defaults, apiEndpoint }: Props) {
   const schema = z.object(Object.fromEntries(fields.map((field) => [
     field.name,
-    field.type === "checkbox" ? z.boolean() : z.string().trim().max(5000),
+    field.type === "checkbox" ? z.boolean() : field.type === "image" ? z.string().max(1_250_000) : z.string().trim().max(5000),
   ])));
   const form = useForm<Record<string, string | boolean>>({
     resolver: zodResolver(schema),
@@ -33,8 +35,30 @@ export default function SectionForm({ section, title, description, fields, defau
   });
   const [notice, setNotice] = useState("");
 
-  const persist = (draft: boolean) => form.handleSubmit((values) => {
-    setNotice(saveProfileDraft(section, values, draft));
+  useEffect(() => {
+    if (!apiEndpoint) return;
+    const token = readStoredUser()?.accessToken;
+    if (!token) return;
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3300/api"}${apiEndpoint}`, { headers: { Authorization: `Bearer ${token}` } })
+      .then((response) => response.ok ? response.json() : null)
+      .then((payload) => { if (payload?.data) form.reset({ ...defaults, ...payload.data }); })
+      .catch(() => undefined);
+  }, [apiEndpoint, form, defaults]);
+
+  const persist = (draft: boolean) => form.handleSubmit(async (values) => {
+    if (!apiEndpoint || draft) {
+      setNotice(saveProfileDraft(section, values, draft));
+      return;
+    }
+    const token = readStoredUser()?.accessToken;
+    if (!token) return setNotice("Please log in with your company account before saving.");
+    const url = `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3300/api"}${apiEndpoint}`;
+    let response = await fetch(url, { method: "PUT", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify(values) });
+    if (response.status === 404) {
+      response = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` }, body: JSON.stringify(values) });
+    }
+    const payload = await response.json();
+    setNotice(response.ok ? "Changes saved to the database." : payload.message || `Unable to save changes (${response.status}).`);
   })();
 
   return (
@@ -42,7 +66,7 @@ export default function SectionForm({ section, title, description, fields, defau
       <p className="text-xs font-bold uppercase tracking-wider text-[#0b1f3b]">Business Profile</p>
       <h1 className="mt-2 text-2xl font-bold text-gray-900">{title}</h1>
       <p className="mt-2 max-w-3xl text-sm text-gray-500">{description}</p>
-      <form onSubmit={form.handleSubmit((values) => setNotice(saveProfileDraft(section, values)))} className="mt-7 space-y-6">
+      <form onSubmit={(event) => { event.preventDefault(); persist(false); }} className="mt-7 space-y-6">
         <div className="grid gap-5 md:grid-cols-2">
           {fields.map((field) => (
             <label key={field.name} className={field.type === "textarea" || field.type === "image" || field.type === "video" || field.type === "media" ? "md:col-span-2" : ""}>

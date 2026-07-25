@@ -2,6 +2,8 @@ import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 import { companyAuthRouter } from "./company/routers/companyAuthRouter.js";
+import { companyListingRouter } from "./company/routers/companyListingRouter.js";
+import { headerProfileRouter } from "./company/header-profile/routers/headerProfileRouter.js";
 import { authRouter } from "./routes/authRoutes.js";
 import { freelancerAuthRouter } from "./freelancer/routers/freelancerAuthRouter.js";
 import { userAuthRouter } from "./user/routers/userAuthRouter.js";
@@ -9,7 +11,7 @@ import { userAuthRouter } from "./user/routers/userAuthRouter.js";
 export const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN?.split(",") || "http://localhost:3000" }));
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "3mb" }));
 
 app.get("/health", (_req, res) => {
   res.status(mongoose.connection.readyState === 1 ? 200 : 503).json({
@@ -27,6 +29,8 @@ app.get("/api", (_req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/companies/header-profile", headerProfileRouter);
+app.use("/api/companies", companyListingRouter);
 app.use("/api/auth/users", userAuthRouter);
 app.use("/api/auth/companies", companyAuthRouter);
 app.use("/api/auth/freelancers", freelancerAuthRouter);

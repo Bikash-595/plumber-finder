@@ -2,6 +2,8 @@
 
 import { ChangeEvent, FormEvent, useState } from "react";
 import { FaArrowRight, FaChevronLeft, FaPlus, FaSave } from "react-icons/fa";
+import { readStoredUser } from "@/components/utils/auth";
+import LocationPicker from "@/components/company-dashboard/LocationPicker";
 
 const steps = [
   {
@@ -629,6 +631,9 @@ export default function AddCompanyWizard() {
   const [locations, setLocations] = useState([initialLocation]);
   const [galleryImages, setGalleryImages] = useState([initialGalleryImage]);
   const [galleryVideos, setGalleryVideos] = useState([initialGalleryVideo]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState("");
 
   const step = steps[stepIndex];
 
@@ -668,10 +673,29 @@ export default function AddCompanyWizard() {
   const goNext = () => setStepIndex((current) => Math.min(current + 1, steps.length - 1));
   const goBack = () => setStepIndex((current) => Math.max(current - 1, 0));
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Onboarding payload", { formData, services, locations });
-    alert("Company onboarding data saved. You can now integrate this with the backend API.");
+    const token = readStoredUser()?.accessToken;
+    if (!token) {
+      setSubmitError("Please log in with your company account before publishing a listing.");
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitError("");
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3300/api"}/companies/onboarding`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ formData, services, locations, galleryImages, galleryVideos }),
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.message || "Unable to publish the company listing.");
+      setSubmitSuccess("Company listing published. It is now available on the public listings API.");
+    } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : "Unable to publish the company listing.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -1069,6 +1093,7 @@ export default function AddCompanyWizard() {
                         className="mt-2 block w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none transition focus:border-[#FFD60A] focus:ring-2 focus:ring-[#FFD60A]/30"
                       />
                     </label>
+                    <div className="md:col-span-2"><LocationPicker address={location.address} latitude={location.latitude} longitude={location.longitude} onChange={({ latitude, longitude }) => { updateLocation(index, "latitude", latitude); updateLocation(index, "longitude", longitude); }} /></div>
                   </div>
                 </div>
               ))}
@@ -1104,13 +1129,16 @@ export default function AddCompanyWizard() {
             ) : (
               <button
                 type="submit"
+                disabled={isSubmitting}
                 className="inline-flex min-h-11 items-center justify-center rounded-xl bg-[#FFD60A] px-5 py-3 text-sm font-semibold text-[#0b1f3b] transition hover:bg-[#e6c000]"
               >
-                Submit Listing
+                {isSubmitting ? "Publishing…" : "Submit Listing"}
               </button>
             )}
           </div>
         </div>
+        {submitError && <p className="rounded-xl bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{submitError}</p>}
+        {submitSuccess && <p className="rounded-xl bg-emerald-50 px-4 py-3 text-sm font-medium text-emerald-700">{submitSuccess}</p>}
       </form>
     </section>
   );
